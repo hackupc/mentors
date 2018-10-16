@@ -1,0 +1,43 @@
+<h2>Show Ticket</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @ticket.name %>
+  </li>
+
+  <li>
+    <strong>Imageurl:</strong>
+    <%= @ticket.imageUrl %>
+  </li>
+
+  <li>
+    <strong>Topic:</strong>
+    <%= @ticket.topic %>
+  </li>
+
+  <li>
+    <strong>Contact:</strong>
+    <%= @ticket.contact %>
+  </li>
+
+  <li>
+    <strong>Location:</strong>
+    <%= @ticket.location %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @ticket.status %>
+  </li>
+
+  <li>
+    <strong>Comments:</strong>
+    <%= @ticket.comments %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: ticket_path(@conn, :edit, @ticket) %></span>
+<span><%= link "Back", to: ticket_path(@conn, :index) %></span>
