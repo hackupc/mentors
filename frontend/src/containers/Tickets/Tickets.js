@@ -56,6 +56,7 @@ class Tickets extends Component {
 
     state = {
         tickets: [],
+        showAll: true,
         open: false,
     }
 
@@ -68,6 +69,11 @@ class Tickets extends Component {
         loadTickets(this.ticketsLoadedHandler, this.props.cookies.get('token'));
     }
 
+    toggleShow = () => {
+        let showStatus = this.state.showAll;
+        this.setState({showAll: !showStatus});
+    }
+
     handleOpen = () => {
         this.setState({ open: true });
     };
@@ -75,13 +81,30 @@ class Tickets extends Component {
     handleClose = () => {
         this.setState({ open: false });
     };
+
+    onCreateTicket = (ticket) => {
+        let updatedTickets = this.state.tickets;
+        updatedTickets.push(ticket);
+        this.setState({tickets: updatedTickets});
+        this.handleClose();
+    }
+
+    onTicketClaimed = (ticket) => {
+        let updatedTickets = this.state.tickets;
+        for (var i = 0; i < updatedTickets.length; i+=1) {
+            if (updatedTickets[i].id == ticket.id) {
+                updatedTickets[i].claimer_id = ticket.claimer_id;
+            }
+        }
+        this.setState({tickets: updatedTickets});
+    }
     
     render () {
         const { classes } = this.props;
 
         console.log(this.props.cookies.get('user_id'));
         let t = this.state.tickets
-            .filter((ticket) => !ticket.claimer_id)
+            .filter((ticket) => !ticket.claimer_id || !this.state.showAll)
             .map(ticket =>{
                 return (
                         <Grid item key={ticket.id} xs={12} sm={3}>
@@ -90,8 +113,10 @@ class Tickets extends Component {
                                 name={ticket.name} 
                                 description={ticket.topic}
                                 email={ticket.contact}
+                                location={ticket.location}
                                 ticket={ticket}
-                                cookies={this.props.cookies}/>
+                                cookies={this.props.cookies}
+                                onClaim={this.onTicketClaimed}/>
                         </Grid>
                 )
             });
@@ -103,6 +128,7 @@ class Tickets extends Component {
 
         return (
             <div>
+                {this.props.cookies.get('is_admin') || this.props.cookies.get('is_mentor') ? <Button variant="contained" className={classes.topButton} onClick={this.toggleShow}>{this.state.showAll ? "Show claimed" : "Show pending"}</Button> : null}
                 <center>
                     <h3>Tickets</h3>
                     <Grid container spacing={32} className={classes.demo} justify="center">
@@ -114,9 +140,10 @@ class Tickets extends Component {
                     aria-describedby="simple-modal-description"
                     open={this.state.open}
                     onClose={this.handleClose}
+                    
                     >
                     <div style={getModalStyle()} className={classes.paper}>
-                        <TicketForm cookies={this.cookies}></TicketForm>
+                        <TicketForm cookies={this.cookies} onCreate={this.onCreateTicket}></TicketForm>
                         
                     </div>
                 </Modal>

@@ -38,7 +38,7 @@ function ticketCard(props) {
         console.log("claiming");
         console.log(ticket)
         claimTicket(ticket, token, user_id, (response) => {
-    
+            props.onClaim(response)
         }, (error) => {
     
         });
@@ -55,7 +55,7 @@ function ticketCard(props) {
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
                 Slack: {props.email}<br></br>
-                Location: A5202
+                Location: {props.location}
             </Typography>
         </CardContent>
         <CardActions>

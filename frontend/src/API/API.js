@@ -81,7 +81,7 @@ const registerMentor = (email, name, password, contact, code, onResponse, onErro
     });
 }
 
-const createTicket = (title, topic, comments, location, contact, token) => {
+const createTicket = (title, topic, comments, location, contact, token, onResponse, onError) => {
     axios({ method: 'POST', url: baseUrl + '/api/v1/tickets', headers: {Authorization: token}, data: 
         {
             "ticket": {
@@ -96,8 +96,10 @@ const createTicket = (title, topic, comments, location, contact, token) => {
         }
     }).then(function (response) {
         console.log(response);
+        onResponse(response);
     }).catch(function (error) {
         console.log(error);
+        onError(error)
     });
 }
 
@@ -138,7 +140,7 @@ const claimTicket = (ticket, token, user_id, onResponse, onError) => {
     console.log(ticket.id)
     axios({ method: 'PUT', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {ticket: {id: ticket.id, claimer_id: user_id}}
     }).then(function (response) {
-        onResponse(response.data);
+        onResponse(response.data.data);
     }).catch(function (error) {
         onError(error)
     });
