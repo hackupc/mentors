@@ -12,12 +12,15 @@ import Modal from '@material-ui/core/Modal';
 
 import TicketForm from '../../components/TicketForm/TicketForm'
 
+import './Tickets.css'
+
 const styles = theme => ({
     button: {
       margin: theme.spacing.unit,
       position: 'fixed',
       right: 16,
-      bottom: 16
+      bottom: 16,
+      backgroundColor: '#d13f5a'
     },
     topButton: {
       margin: theme.spacing.unit,
@@ -78,7 +81,7 @@ class Tickets extends Component {
 
         console.log(this.props.cookies.get('user_id'));
         let t = this.state.tickets
-            .filter((ticket) => !ticket.claimer_id)
+            
             .map(ticket =>{
                 return (
                         <Grid item key={ticket.id} xs={12} sm={3}>

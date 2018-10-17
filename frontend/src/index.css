@@ -2,5 +2,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #EAFDF8;
+  background-image: url('../src/assets/images/background.png');
+}
+
+.Button {
+  color: #d13f5a
 }

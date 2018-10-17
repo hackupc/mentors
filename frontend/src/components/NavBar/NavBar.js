@@ -19,6 +19,10 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  bar: {
+    colorPrimary: '#d13f5a',
+    colorDefault: '#d13f5a'
+  }
 };
 
 const ButtonAppBar = (props) => {
@@ -43,7 +47,7 @@ const ButtonAppBar = (props) => {
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor: '#d13f5a'}} color="default">
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.grow}>
             <NavLink to="" style={{'color': 'white'}}>HackUPC Mentors</NavLink>
