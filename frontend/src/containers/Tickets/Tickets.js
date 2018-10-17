@@ -81,7 +81,7 @@ class Tickets extends Component {
 
         console.log(this.props.cookies.get('user_id'));
         let t = this.state.tickets
-            
+            .filter((ticket) => !ticket.claimer_id)
             .map(ticket =>{
                 return (
                         <Grid item key={ticket.id} xs={12} sm={3}>
