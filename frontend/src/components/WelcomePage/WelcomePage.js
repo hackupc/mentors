@@ -16,8 +16,9 @@ const styles = theme => ({
       marginLeft: 20
     },
     card: {
+        padding: 16,
         minWidth: 275,
-        maxWidth: 400,
+        maxWidth: 600,
         margin: 16,
     },
 });
