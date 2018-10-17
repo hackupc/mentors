@@ -17,7 +17,7 @@ const profile = (props) => {
         <center>
             <Card className={classes.card}>
                 {props.name}<br></br>
-                alvaro@hackupc.com
+                {props.email}
             </Card>
         </center>
     );

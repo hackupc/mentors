@@ -21,13 +21,15 @@ const styles = theme => ({
         margin: theme.spacing.unit,
         position: 'fixed',
         right: 16,
-        bottom: 16
+        bottom: 16,
+        backgroundColor: '#d13f5a'
     },
     topButton: {
         margin: theme.spacing.unit,
         position: 'fixed',
         top: 68,
-        right: 16
+        right: 16,
+        backgroundColor: '#d13f5a'
     },
     extendedIcon: {
         marginRight: theme.spacing.unit,
@@ -116,7 +118,6 @@ class Admin extends Component {
                         <InviteUserForm cookies={this.cookies}></InviteUserForm>
                     </div>
                 </Modal>
-                <Button style={styles.button} onClick={this.handleOpen}>Invite mentor</Button>
                 <center>
                     <div className={classes.root}>
                         <Card>
@@ -126,6 +127,7 @@ class Admin extends Component {
                             </List>
                         </Card>
                     </div>
+                    <Button variant="contained" style={styles.button} onClick={this.handleOpen}>Invite mentor</Button>
                 </center>
             </div>
         )
