@@ -3,6 +3,7 @@ defmodule HackUpcMentorsApiWeb.UserSocket do
 
   ## Channels
   # channel "room:*", HackUpcMentorsApiWeb.RoomChannel
+  channel "tickets_channel:lobby", HackUpcMentorsApiWeb.TicketsChannelChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
