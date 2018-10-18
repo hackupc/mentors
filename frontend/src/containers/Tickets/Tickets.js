@@ -123,7 +123,7 @@ class Tickets extends Component {
         
 
         if (!this.cookies.get('token')) {
-            return <center><h1>You must log in before</h1></center>
+            return <center><h1>You must <a href='/sign-in'>log in</a> before</h1></center>
         }
 
         return (
