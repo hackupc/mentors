@@ -50,14 +50,13 @@ function ticketCard(props) {
     <Card className={classes.card}>
         <CardContent>
             <Typography className={classes.title} color="textPrimary">
-                {props.name}
+                {props.ticket.name}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-                {props.description}
-            </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-                Slack: {props.email}<br></br>
-                Location: {props.location}
+                {props.ticket.comments}<br/><br/>
+                Topic: {props.ticket.topic}<br/>
+                Slack: {props.ticket.contact}<br></br>
+                Location: {props.ticket.location}
             </Typography>
         </CardContent>
         <CardActions>

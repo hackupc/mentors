@@ -60,8 +60,9 @@ class TicketForm extends Component {
         const { classes } = this.props;
         return (            
         <Aux>
+            <center>
+            <h2>Create a new ticket</h2>
             <form onSubmit={this.logIn} noValidate autoComplete='off'>
-                <center>
                 <TextField
                     id='name'
                     label='Title'
@@ -100,8 +101,8 @@ class TicketForm extends Component {
                 <Button variant='contained' color='primary' className={classes.button} onClick={this.handleTicketSubmit}>
                     Create ticket
                 </Button>
-                </center>
             </form>
+            </center>
         </Aux>
         );
     }

@@ -126,10 +126,6 @@ class Tickets extends Component {
                         <Grid item key={ticket.id} xs={12} sm={3}>
                             <TicketCard 
                                 mine={ticket.user_id == this.props.cookies.get('user_id')}
-                                name={ticket.name} 
-                                description={ticket.topic}
-                                email={ticket.contact}
-                                location={ticket.location}
                                 ticket={ticket}
                                 cookies={this.props.cookies}
                                 onClaim={this.onTicketClaimed}
