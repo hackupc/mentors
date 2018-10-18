@@ -41,6 +41,7 @@
                         'Elixir.HackUpcMentorsApiWeb.SessionView',
                         'Elixir.HackUpcMentorsApiWeb.TicketController',
                         'Elixir.HackUpcMentorsApiWeb.TicketView',
+                        'Elixir.HackUpcMentorsApiWeb.TicketsChannelChannel',
                         'Elixir.HackUpcMentorsApiWeb.UserController',
                         'Elixir.HackUpcMentorsApiWeb.UserSocket',
                         'Elixir.HackUpcMentorsApiWeb.UserView']},

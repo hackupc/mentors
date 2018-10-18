@@ -32,7 +32,7 @@ const ButtonAppBar = (props) => {
   if (props.email) {
     rightLinks = (
     <Aux>
-      {props.cookies.get("is_admin") ? <NavLink to="/admin"style={{'color': 'white', 'margin': '10px'}}>Admin</NavLink> : null}
+      { props.cookies.get("is_admin") === true ? <NavLink to="/admin"style={{'color': 'white', 'margin': '10px'}}>Admin</NavLink> : null}
       <NavLink to="/tickets" style={{'color': 'white', 'margin': '10px'}}>Tickets</NavLink>
       <NavLink to="/profile" style={{'color': 'white', 'margin': '10px'}}>{props.email}</NavLink>
     </Aux>);

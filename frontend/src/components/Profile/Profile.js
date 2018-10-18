@@ -5,13 +5,22 @@ import Button from '@material-ui/core/Button';
 
 const styles = {
     card: {
-      maxWidht: 400,
-      padding: 8,
-      margin: 16
+        maxWidth: 400,
+        padding: 16,
+        margin: 16
     }
 };
 
 const profile = (props) => {
+    function logOut() {
+        props.cookies.remove("token");
+        props.cookies.remove("email");
+        props.cookies.remove("name");
+        props.cookies.remove("user_id");
+        props.cookies.remove("contact");
+        window.location = "/";
+    }
+
     console.log(props)
     const { classes } = props;
     return (
@@ -20,7 +29,7 @@ const profile = (props) => {
                 {props.name}<br></br>
                 {props.email}
             </Card>
-            <Button variant="contained">Log out</Button>
+            <Button variant="contained" onClick={logOut}>Log out</Button>
         </center>
     );
 }

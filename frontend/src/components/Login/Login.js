@@ -62,8 +62,8 @@ class Login extends Component {
             this.cookies.set('user_id', response.data.data.user_id, { path: '/' });
             this.cookies.set('contact', response.data.data.contact, { path: '/' });
             this.cookies.set('is_admin', response.data.data.is_admin, { path: '/' });
-            this.cookies.set('is_hacker', response.data.data.is_admin, { path: '/' });
-            this.cookies.set('is_mentor', response.data.data.is_admin, { path: '/' });
+            this.cookies.set('is_hacker', response.data.data.is_hacker, { path: '/' });
+            this.cookies.set('is_mentor', response.data.data.is_mentor, { path: '/' });
             console.log(this.cookies.get('token'));
             this.setState({redirect: true})
         }, (error) => {
