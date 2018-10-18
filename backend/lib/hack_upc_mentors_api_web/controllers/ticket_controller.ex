@@ -29,15 +29,10 @@ defmodule HackUpcMentorsApiWeb.TicketController do
   end
 
   def update(conn, %{"id" => id, "ticket" => ticket_params}) do
-    IO.inspect(ticket_params)
     %{"claimer_id" => claimer_id} = ticket_params
-    IO.puts("+++++  CLAIMER ID")
-    IO.inspect(claimer_id)
     user_id = HackUpcMentorsApi.GuardianHelper.get_user_id(conn)
     ticket = Mentors.get_ticket!(id, user_id)
 
-    IO.puts("++++ got ticket")
-    IO.inspect(ticket)
     with {:ok, %Ticket{} = ticket} <- Mentors.update_ticket(ticket, ticket_params) do
       render(conn, "show.json", ticket: ticket)
     end

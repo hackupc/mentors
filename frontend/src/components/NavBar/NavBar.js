@@ -28,11 +28,16 @@ const styles = {
 const ButtonAppBar = (props) => {
   const { classes } = props;
   let rightLinks;
-  console.log('navbar ' + props.email)
+  let admin = null;
+  console.log(props.cookies.get('is_admin'));
+  let isAdmin = props.cookies.get('is_admin');
+  if (isAdmin === "true") {
+    admin = <NavLink to="/admin"style={{'color': 'white', 'margin': '10px'}}>Admin</NavLink>
+  }
   if (props.email) {
     rightLinks = (
     <Aux>
-      { props.cookies.get("is_admin") === true ? <NavLink to="/admin"style={{'color': 'white', 'margin': '10px'}}>Admin</NavLink> : null}
+      { admin }
       <NavLink to="/tickets" style={{'color': 'white', 'margin': '10px'}}>Tickets</NavLink>
       <NavLink to="/profile" style={{'color': 'white', 'margin': '10px'}}>{props.email}</NavLink>
     </Aux>);

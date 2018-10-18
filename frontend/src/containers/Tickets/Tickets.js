@@ -11,6 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Modal from '@material-ui/core/Modal';
 
 import TicketForm from '../../components/TicketForm/TicketForm'
+import TicketDetail from '../../components/TicketDetail/TicketDetail'
 
 import './Tickets.css'
 
@@ -20,7 +21,10 @@ const styles = theme => ({
       position: 'fixed',
       right: 16,
       bottom: 16,
-      backgroundColor: '#d13f5a'
+      backgroundColor: '#d13f5a',
+      "&:hover": {
+          backgroundColor: "#d13f5a"
+      }
     },
     topButton: {
       margin: theme.spacing.unit,
@@ -58,6 +62,8 @@ class Tickets extends Component {
         tickets: [],
         showAll: true,
         open: false,
+        editing: false,
+        selectedTicket: null
     }
 
     ticketsLoadedHandler = (tickets) => {
@@ -81,6 +87,16 @@ class Tickets extends Component {
     handleClose = () => {
         this.setState({ open: false });
     };
+
+    handleEditing = (ticket) => {
+        this.setState({selectedTicket: ticket})
+        this.setState({ editing: true})
+    }
+
+    handleEndEditing = () => {
+        this.setState({selectedTicket: null})
+        this.setState({ editing: false})
+    }
 
     onCreateTicket = (ticket) => {
         let updatedTickets = this.state.tickets;
@@ -116,7 +132,8 @@ class Tickets extends Component {
                                 location={ticket.location}
                                 ticket={ticket}
                                 cookies={this.props.cookies}
-                                onClaim={this.onTicketClaimed}/>
+                                onClaim={this.onTicketClaimed}
+                                onView={this.handleEditing}/>
                         </Grid>
                 )
             });
@@ -139,13 +156,25 @@ class Tickets extends Component {
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                     open={this.state.open}
-                    onClose={this.handleClose}
-                    
-                    >
-                    <div style={getModalStyle()} className={classes.paper}>
-                        <TicketForm cookies={this.cookies} onCreate={this.onCreateTicket}></TicketForm>
-                        
-                    </div>
+                    onClose={this.handleClose}>
+                        <div style={getModalStyle()} className={classes.paper}>
+                            <TicketForm cookies={this.cookies} onCreate={this.onCreateTicket}></TicketForm>
+                            
+                        </div>
+                </Modal>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.editing}
+                    onClose={this.handleEndEditing}>
+                        <div style={getModalStyle()} className={classes.paper}>
+                            <TicketDetail 
+                                ticket={this.state.selectedTicket}
+                                cookies={this.cookies}
+                                onEdit={this.onEditTicket}
+                                onDelete={this.onDeleteTicket}/>
+                            
+                        </div>
                 </Modal>
                 {this.props.cookies.get('is_hacker') ? <Button variant="fab" color="primary" aria-label="Add" className={classes.button} onClick={this.handleOpen}>
                     <AddIcon />

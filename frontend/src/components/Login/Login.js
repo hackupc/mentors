@@ -29,7 +29,10 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
         width: '200px',
-        backgroundColor: '#d13f5a'
+        backgroundColor: '#d13f5a',
+        "&:hover": {
+            backgroundColor: "#d13f5a"
+        }
       },
 });
 

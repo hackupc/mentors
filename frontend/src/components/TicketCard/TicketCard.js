@@ -29,8 +29,6 @@ const styles = {
     },
   };
 
-
-
 function ticketCard(props) {
     const { classes } = props;
 
@@ -42,6 +40,10 @@ function ticketCard(props) {
         }, (error) => {
     
         });
+    }
+
+    function viewTicket() {
+        props.onView(props.ticket);
     }
 
     return (
@@ -59,8 +61,8 @@ function ticketCard(props) {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small">View</Button>
-            {props.cookies.get('is_mentor') ? <Button size="small" onClick={() => claim(props.ticket, props.cookies.get('user_id'), props.cookies.get('token'))}>Claim</Button> : null}
+            <Button size="small" onClick={viewTicket}>View</Button>
+            {props.cookies.get('is_mentor') === "true" || props.cookies.get('is_admin') === "true" ? <Button size="small" onClick={() => claim(props.ticket, props.cookies.get('user_id'), props.cookies.get('token'))}>Claim</Button> : null}
         </CardActions>
     </Card>
     );

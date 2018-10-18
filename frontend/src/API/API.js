@@ -146,4 +146,13 @@ const claimTicket = (ticket, token, user_id, onResponse, onError) => {
     });
 }
 
+const deleteTicket = (ticket, token, onResponse, onError) => {
+    axios({ method: 'DELETE', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {}
+    }).then(function (response) {
+        onResponse(response.data.data);
+    }).catch(function (error) {
+        onError(error)
+    });
+}
+
 export { login, createTicket , loadTickets, register, getUsers, inviteUser, claimTicket, registerMentor };
