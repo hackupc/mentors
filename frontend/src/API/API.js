@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:4000';
+// const baseUrl = 'http://localhost:4000';
+const baseUrl = 'http://178.128.167.113:4000';
 
 const login = (email, password, onResponse, onError) => {
     console.log('log in');
@@ -137,7 +138,15 @@ const loadTickets = (callback, token) => {
 }
 
 const claimTicket = (ticket, token, user_id, onResponse, onError) => {
-    console.log(ticket.id)
+    axios({ method: 'PUT', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {ticket: {id: ticket.id, claimer_id: user_id}}
+    }).then(function (response) {
+        onResponse(response.data.data);
+    }).catch(function (error) {
+        onError(error)
+    });
+}
+
+const updateTicket = (ticket, token, user_id, onResponse, onError) => {
     axios({ method: 'PUT', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {ticket: {id: ticket.id, claimer_id: user_id}}
     }).then(function (response) {
         onResponse(response.data.data);

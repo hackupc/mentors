@@ -71,8 +71,6 @@ defmodule HackUpcMentorsApi.Accounts.User do
 		struct
 		|> validate_length(:email, min: 5, max: 255, message: "error_email_length")
 		|> validate_format(:email, ~r/@/, [message: "error_email_format"])
-		|> validate_length(:password, min: 8, message: "error_password_length")
-		|> validate_format(:password, ~r/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*/, [message: "error_password_format"])
 		|> unique_constraint(:email, [message: "error_user_duplicated"])
 		|> generate_password_hash
 	end

@@ -44,6 +44,7 @@ class SignUp extends Component {
         password: null,
         contact: null,
         open: false,
+        registered: false,
         vertical: 'top',
         horizontal: 'center',
     }
@@ -61,10 +62,11 @@ class SignUp extends Component {
     signUp = () => {
         register(this.state.email, this.state.name, this.state.password, this.state.contact,
         (response) => {
-            this.setState({ open: true, ...this.state });
+            this.setState({ registered: true });
             console.log(response);
         }, (error) => {
             console.log(error);
+            this.setState({ open: true });
         });
     }
 
@@ -77,8 +79,9 @@ class SignUp extends Component {
     render() {
         const { classes } = this.props;
         const { vertical, horizontal, open } = this.state;
-        if (this.state.open) {
-            return <Redirect to='/log-in'/>; 
+
+        if (this.state.registered) {
+            return <Redirect to='/log-in'/>;
         }
         return(
             <center>
@@ -126,7 +129,7 @@ class SignUp extends Component {
                     ContentProps={{
                         'aria-describedby': 'message-id',
                     }}
-                    message={<span id="message-id">I love snacks</span>}
+                    message={<span id="message-id"> There was an error. </span>}
                 />
             </Card>
             </center>
