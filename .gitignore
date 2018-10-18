@@ -3,3 +3,4 @@
 *.beam
 /backend/deps
 /backend/_build
+/frontend/build
