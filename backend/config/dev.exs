@@ -51,7 +51,7 @@ config :phoenix, :stacktrace_depth, 20
 config :hack_upc_mentors_api, HackUpcMentorsApi.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: System.get_env("DB_USER"),
-  password: System.get_env("DB_USER"),
+  password: System.get_env("DB_PASS"),
   database: "hack_upc_mentors_api_dev",
   hostname: "localhost",
   pool_size: 10
