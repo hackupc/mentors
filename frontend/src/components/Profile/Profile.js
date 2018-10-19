@@ -69,7 +69,7 @@ class profile extends Component {
     editClicked = () => {
         let edit = this.state.showEdit;
         if (edit) {
-            updateContact(this.state.contact, this.props.cookies.get('token'),
+            updateContact(this.props.cookies.get('user_id'), this.state.contact, this.props.cookies.get('token'),
             (response) => {
                 this.props.cookies.set('contact', this.state.contact, { path: '/' });
             }, (error) => {
