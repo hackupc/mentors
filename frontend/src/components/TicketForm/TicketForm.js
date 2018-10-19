@@ -42,7 +42,7 @@ class TicketForm extends Component {
     cookies = this.props.cookies
 
     handleTicketSubmit = () => {
-        createTicket(this.state.name, this.state.topic, this.state.comments, this.state.location, this.state.contact, this.cookies.get('token'),
+        createTicket(this.state.name, this.state.topic, this.state.comments, this.state.location, this.cookies.get('contact'), this.cookies.get('token'),
         (response) => {
             this.props.onCreate(response.data.data);
         }, (onError) => {
@@ -87,13 +87,6 @@ class TicketForm extends Component {
                 <TextField
                     id='location'
                     label='Location'
-                    className={classes.textField}
-                    margin='normal'
-                    onChange={this.handleChange}
-                /><br/>
-                <TextField
-                    id='contact'
-                    label='Contact (slack)'
                     className={classes.textField}
                     margin='normal'
                     onChange={this.handleChange}
