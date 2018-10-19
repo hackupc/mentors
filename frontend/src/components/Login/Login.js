@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
 
 import { login } from '../../API/API'
@@ -40,7 +41,9 @@ class Login extends Component {
     state = {
         email: null,
         password: null,
-        redirect: false
+        redirect: false,
+        vertical: 'top',
+        horizontal: 'center',
     }
 
     cookies = this.props.cookies

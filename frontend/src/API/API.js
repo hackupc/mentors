@@ -164,7 +164,7 @@ const claimTicket = (ticket, token, user_id, onResponse, onError) => {
 }
 
 const updateTicket = (ticket, token, user_id, onResponse, onError) => {
-    axios({ method: 'PUT', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {ticket: {id: ticket.id, claimer_id: user_id}}
+    axios({ method: 'PUT', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {ticket: ticket}
     }).then(function (response) {
         onResponse(response.data.data);
     }).catch(function (error) {

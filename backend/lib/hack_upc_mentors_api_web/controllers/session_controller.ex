@@ -25,7 +25,9 @@ defmodule HackUpcMentorsApiWeb.SessionController do
         }
     }
     """
-    def sign_in(conn, %{"email" => email, "password" => password}) do
+    def sign_in(conn, params) do
+        downcasedParams = Map.update!(params, "email", &(String.downcase(&1)))
+        %{"email" => email, "password" => password} = downcasedParams
         case User.find_and_confirm_password(email, password) do
             {:ok, user} ->
                 IO.inspect(user)
@@ -38,6 +40,14 @@ defmodule HackUpcMentorsApiWeb.SessionController do
                 |> put_status(401)
                 |> render("error.json", errors: errors)
         end
+    end
+
+    def request_reset_password(conn, params) do
+
+    end
+
+    def reset_password(conn, params) do
+
     end
 end
 

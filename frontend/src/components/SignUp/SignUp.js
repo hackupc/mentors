@@ -42,6 +42,7 @@ class SignUp extends Component {
         email: null,
         name: null,
         password: null,
+        confirm_password: null,
         contact: null,
         open: false,
         registered: false,
@@ -117,6 +118,14 @@ class SignUp extends Component {
                         margin="normal"
                         type='password'
                     /><br/>
+                    {/* <TextField
+                        id="confirm_password"
+                        label="Confirm Password"
+                        className={classes.textField}
+                        onChange={this.handleChange}
+                        margin="normal"
+                        type='password'
+                    /><br/> */}
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.signUp}>
                         Register
                     </Button>

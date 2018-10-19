@@ -3,6 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+import { updateTicket } from '../../API/API';
+
 const styles = theme => ({
     textField: {
       marginLeft: theme.spacing.unit,
@@ -36,7 +38,17 @@ class TicketDetail extends Component {
     }
 
     handleSaveTicket = () => {
+        updateTicket({name: this.state.name,
+                        topic: this.state.topic,
+                        comments: this.state.comments,
+                        location: this.state.location}, 
+                    this.props.cookies.get('token'),
+                    this.props.cookies.get('user_id'),
+        (response) => {
 
+        }, (error) => {
+
+        })
     }
 
     render() {
