@@ -83,6 +83,22 @@ const registerMentor = (email, name, password, contact, code, onResponse, onErro
     });
 }
 
+const updateContact = (id, contact, token, onResponse, onError) => {
+    axios({ method: 'PUT', url: baseUrl + '/api/v1/users/' + id, headers: {Authorization: token}, data: 
+        {
+            "user": {
+                "contact":contact
+            }	
+        }
+    }).then(function (response) {
+        console.log(response.data.data);
+        onResponse(response);
+    }).catch(function (error) {
+        console.log(error);
+        onError(error)
+    });
+}
+
 const createTicket = (title, topic, comments, location, contact, token, onResponse, onError) => {
     axios({ method: 'POST', url: baseUrl + '/api/v1/tickets', headers: {Authorization: token}, data: 
         {
@@ -165,4 +181,4 @@ const deleteTicket = (ticket, token, onResponse, onError) => {
     });
 }
 
-export { login, createTicket , loadTickets, register, getUsers, inviteUser, claimTicket, registerMentor };
+export { login, createTicket , loadTickets, register, getUsers, inviteUser, claimTicket, registerMentor, updateTicket, deleteTicket, updateContact };

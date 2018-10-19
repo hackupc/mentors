@@ -75,10 +75,6 @@ class Admin extends Component {
         this.setState( {users: users} )
     }
 
-    handleButtonInviteClick = () => {
-        
-    }
-
     handleOpen = () => {
         this.setState({ showAddUsers: true });
     };

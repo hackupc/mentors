@@ -60,6 +60,14 @@ defmodule HackUpcMentorsApiWeb.UserController do
           render(conn, "show.json", user: user)
         end
       false ->
+        case user_id == conn_user.id do
+          true ->
+            user = Accounts.get_user!(id)
+            with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
+              render(conn, "show.json", user: user)
+            end
+          false ->
+        end
         {:error, :not_found}
     end
   end

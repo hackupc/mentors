@@ -29,7 +29,6 @@ defmodule HackUpcMentorsApiWeb.TicketController do
   end
 
   def update(conn, %{"id" => id, "ticket" => ticket_params}) do
-    %{"claimer_id" => claimer_id} = ticket_params
     user_id = HackUpcMentorsApi.GuardianHelper.get_user_id(conn)
     ticket = Mentors.get_ticket!(id, user_id)
 

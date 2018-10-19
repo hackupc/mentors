@@ -7,6 +7,10 @@ import TextField from '@material-ui/core/TextField';
 
 import Aux from '../../hoc/Aux';
 
+import { updateContact } from '../../API/API';
+import Snackbar from '@material-ui/core/Snackbar';
+
+
 const styles = {
     card: {
         maxWidth: 400,
@@ -32,7 +36,11 @@ function getModalStyle() {
 class profile extends Component {
 
     state = {
-        showEdit: false
+        showEdit: false,
+        contact: null,
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
     }
 
     logOut = () => {
@@ -55,16 +63,30 @@ class profile extends Component {
     editClicked = () => {
         let edit = this.state.showEdit;
         if (edit) {
-
+            updateContact(this.state.contact, this.props.cookies.get('token'),
+            (response) => {
+                this.props.cookies.set('contact', this.state.contact, { path: '/' });
+            }, (error) => {
+                this.setState({open: true});
+            });
         }
         this.setState({showEdit: !edit});
     }
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     cancelClicked = () => {
         this.setState({showEdit: false});
     }
 
+    componentDidMount() {
+        this.setState({contact: this.props.cookies.get('contact')});
+    }
+
     render() {
+        const { vertical, horizontal, open } = this.state;
         console.log(this.props)
         const { classes } = this.props;
         let editUser = <Aux><TextField
@@ -86,9 +108,19 @@ class profile extends Component {
                         {this.state.showEdit ? <Button variant="contained" className={classes.button} onClick={this.cancelClicked}> Cancel </Button> : null}
                         <Button variant="contained" className={classes.button} onClick={this.editClicked}>{this.state.showEdit ? "Save" : "Edit contact"}</Button>
                     </Card>
-                    <Button variant="contained" onClick={this.logOut}>Log out</Button>
-                </center>
 
+                    <Button variant="contained" onClick={this.logOut}>Log out</Button>
+
+                    <Snackbar
+                        anchorOrigin={{ vertical, horizontal }}
+                        open={open}
+                        onClose={this.handleClose}
+                        ContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<span id="message-id"> There was an error. </span>}
+                    />
+                </center>
             </div>
         );
     }

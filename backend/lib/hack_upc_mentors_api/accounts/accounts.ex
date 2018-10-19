@@ -23,7 +23,7 @@ defmodule HackUpcMentorsApi.Accounts do
 
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
+    |> User.user_contact_changeset(attrs)
     |> Repo.update()
   end
 
@@ -32,14 +32,13 @@ defmodule HackUpcMentorsApi.Accounts do
   end
 
   def change_user(%User{} = user) do
-    User.changeset(user, %{})
+    User.user_contact_changeset(user, %{})
   end
 
   def create_admin(attrs \\ %{}) do
     changeset = User.admin_registration_changeset(%User{}, attrs)
     Repo.insert(changeset)
   end
-
 
   ##### MENTORS ####
   def list_mentors(user_id) do

@@ -17,10 +17,15 @@ defmodule HackUpcMentorsApi.Accounts.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  defp changeset(user, attrs) do
     user
     |> cast(attrs, [:name, :email, :password, :is_admin, :is_mentor, :is_hacker])
     |> validate_required([:name, :email, :password, :is_admin, :is_mentor, :is_hacker])
+	end
+
+	def user_contact_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:contact])
   end
 
   def find_and_confirm_password(email, password) do
