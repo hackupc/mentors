@@ -56,7 +56,8 @@ const registerMentor = (email, name, password, contact, code, onResponse, onErro
         "email": email,
         "name": name,
         "contact": contact,
-        "password": password
+        "password": password,
+        "token": code
     })
     .then(function (response) {
         onResponse(response);

@@ -43,6 +43,7 @@ class SignUp extends Component {
         open: false,
         vertical: 'top',
         horizontal: 'center',
+        registered: false
     }
 
     cookies = this.props.cookies;
@@ -56,9 +57,9 @@ class SignUp extends Component {
     };
 
     signUp = () => {
-        registerMentor(this.state.email, this.state.name, this.state.password, this.state.contact,
+        registerMentor(this.state.email, this.state.name, this.state.password, this.state.contact, this.state.code,
         (response) => {
-            this.setState({ open: true, ...this.state });
+            this.setState({ open: true });
             console.log(response);
         }, (error) => {
             console.log(error);
@@ -77,6 +78,7 @@ class SignUp extends Component {
         if (this.state.open) {
             return <Redirect to='/log-in'/>; 
         }
+
         return(
             <center>
                 <Card className={classes.card}>
