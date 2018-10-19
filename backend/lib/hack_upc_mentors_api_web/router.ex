@@ -41,7 +41,7 @@ defmodule HackUpcMentorsApiWeb.Router do
   scope "/api/v1", HackUpcMentorsApiWeb do
     pipe_through :api_auth
     resources "/tickets", TicketController, except: [:new, :edit]
-    resources "/users", UserController, except: [:new, :create, :delete, :show, :index]
+    resources "/users", UserController, except: [:new, :create, :delete]
     resources "/mentors", MentorsController, except: [:new, :edit]
     resources "/tickets_claim", TicketClaimController, except: [:new, :edit]
     post "/invitation-code", InvitationController, :invite_code

@@ -52,6 +52,12 @@ class profile extends Component {
         window.location = "/";
     }
 
+    handleChange = event => {
+        this.setState({
+            [event.target.id]: event.target.value
+        })
+    }
+
     handleClose = () => {
         this.setState({showEdit: false});
     }
@@ -95,7 +101,7 @@ class profile extends Component {
                             className={classes.textField}
                             margin='normal'
                             onChange={this.handleChange}
-                            value={this.props.cookies.get('contact')}
+                            value={this.state.contact}
                             /><br/></Aux>;
         let showContact = <p>Contact: {this.props.cookies.get('contact')}</p>;
         return (
