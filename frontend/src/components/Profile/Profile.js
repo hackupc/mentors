@@ -26,8 +26,9 @@ const profile = (props) => {
     return (
         <center>
             <Card className={classes.card}>
-                {props.name}<br></br>
-                {props.email}
+                Name: {props.name}<br/>
+                Email: {props.email}<br/>
+                Contact: {props.cookies.get('contact')}
             </Card>
             <Button variant="contained" onClick={logOut}>Log out</Button>
         </center>
