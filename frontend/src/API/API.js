@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const baseUrl = 'http://localhost:4000';
-const baseUrl = 'http://178.128.167.113:4000';
+const baseUrl = 'https://mentors.hackupc.com';
 
 const login = (email, password, onResponse, onError) => {
     console.log('log in');

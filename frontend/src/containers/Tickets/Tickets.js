@@ -141,7 +141,7 @@ class Tickets extends Component {
 
         return (
             <div>
-                {this.props.cookies.get('is_admin') === true || this.props.cookies.get('is_mentor') === true ? <Button variant="contained" className={classes.topButton} onClick={this.toggleShow}>{this.state.showAll ? "Show claimed" : "Show pending"}</Button> : null}
+                {this.props.cookies.get('is_admin') === "true" || this.props.cookies.get('is_mentor') === "true" ? <Button variant="contained" className={classes.topButton} onClick={this.toggleShow}>{this.state.showAll ? "Show claimed" : "Show pending"}</Button> : null}
                 <center>
                     <h3>Tickets</h3>
                     <Grid container spacing={32} className={classes.demo} justify="center">

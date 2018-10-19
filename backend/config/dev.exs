@@ -53,5 +53,5 @@ config :hack_upc_mentors_api, HackUpcMentorsApi.Repo,
   username: System.get_env("DB_USER"),
   password: System.get_env("DB_PASS"),
   database: "hack_upc_mentors_api_dev",
-  hostname: "localhost",
+  hostname: "46.101.172.104",
   pool_size: 10
