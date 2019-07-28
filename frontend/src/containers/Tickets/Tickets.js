@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import TicketCard from '../../components/TicketCard/TicketCard';
 import { loadTickets } from '../../API/API'
 
+import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,6 +15,7 @@ import TicketForm from '../../components/TicketForm/TicketForm'
 import TicketDetail from '../../components/TicketDetail/TicketDetail'
 
 import './Tickets.css'
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
     button: {
@@ -41,7 +43,22 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing.unit * 4,
-      }
+    },
+    card: {
+        marginLeft: '7%',
+        marginRight: '7%',
+        marginTop: 30,
+        fontFamily: 'ProximaNovaRegular, roboto, sans-serif',
+        padding: 35,
+    },
+    errorText: {
+        textAlign: 'center',
+        fontWeight: 'normal'
+    },
+    errorLink: {
+        color: '#b4c959',
+
+    }
 });
 
 function getModalStyle() {
@@ -136,7 +153,21 @@ class Tickets extends Component {
         
 
         if (!this.cookies.get('token')) {
-            return <center><h1>You must <a href='/sign-in'>log in</a> before</h1></center>
+            return (
+                <Grid container >
+                    <Grid item xs = {4} ></Grid>
+                    <Grid item xs = {4} >
+                        <Card className = {classes.card} >
+                            <Typography
+                                component="h1" 
+                                variant="h5"
+                                className = {classes.errorText}
+                            >You must <a className = {classes.errorLink} href='/log-in'>log in</a> before</Typography>
+                        </Card>
+                    </Grid>
+                <Grid item xs={4}></Grid>
+            </Grid>
+            )
         }
 
         return (

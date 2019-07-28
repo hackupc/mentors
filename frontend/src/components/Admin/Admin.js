@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
+import { Redirect } from 'react-router-dom';
 
 import InviteUserForm from '../InviteUser/InviteUserForm'
 
@@ -40,6 +41,9 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing.unit * 4,
+    },
+    error: {
+        marginTop: 30
     }
 });
 
@@ -93,8 +97,15 @@ class Admin extends Component {
         }
     }
 
+    
+
     render() {
         const { classes } = this.props;
+
+        if (!this.cookies.get('token')) {
+            console.log('redirecting');
+            return <Redirect to='/log-in'/>
+        }
 
         let usersList;
         if (this.state.users) {

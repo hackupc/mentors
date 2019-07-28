@@ -8,22 +8,8 @@ import { NavLink } from 'react-router-dom';
 
 import Aux from '../../hoc/Aux'
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  bar: {
-    colorPrimary: '#d13f5a',
-    colorDefault: '#d13f5a'
-  }
-};
+import { styles } from '../Styles'
+
 
 const ButtonAppBar = (props) => {
   const { classes } = props;
@@ -32,30 +18,50 @@ const ButtonAppBar = (props) => {
   console.log(props.cookies.get('is_admin'));
   let isAdmin = props.cookies.get('is_admin');
   if (isAdmin === "true") {
-    admin = <NavLink to="/admin"style={{'color': 'white', 'margin': '10px'}}>Admin</NavLink>
+    admin = (
+      <NavLink 
+        to="/admin" 
+        className={classes.navBarLink} 
+        activeClassName={classes.navBarLinkActive} 
+      >Admin</NavLink>)
   }
   if (props.email) {
     rightLinks = (
-    <Aux>
-      { admin }
-      <NavLink to="/tickets" style={{'color': 'white', 'margin': '10px'}}>Tickets</NavLink>
-      <NavLink to="/profile" style={{'color': 'white', 'margin': '10px'}}>{props.email}</NavLink>
-    </Aux>);
+      <Aux>
+        { admin }
+        <NavLink 
+          to="/tickets" 
+          className={classes.navBarLink} 
+          activeClassName={classes.navBarLinkActive}
+        >Tickets</NavLink>
+        <NavLink 
+          to="/profile" 
+          className={classes.navBarLink} 
+          activeClassName={classes.navBarLinkActive}
+        >{props.name}</NavLink>
+      </Aux>);
   } else {
     rightLinks = (
       <Aux>
-        <NavLink to="/tickets" style={{'color': 'white', 'margin': '10px'}}>Tickets</NavLink>
-        <NavLink to="/log-in" style={{'color': 'white', 'margin': '10px'}}>Log In</NavLink>
-        <NavLink to="sign-in" style={{'color': 'white', 'margin': '10px'}}>Sign Up</NavLink>
+        <NavLink 
+          to="/log-in" 
+          className={classes.navBarLink} 
+          activeClassName={classes.navBarLinkActive} 
+        >Log In</NavLink>
+        <NavLink 
+          to="/sign-up" 
+          className={classes.navBarLink} 
+          activeClassName={classes.navBarLinkActive} 
+        >Sign Up</NavLink>
       </Aux>
       );
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{backgroundColor: '#d13f5a'}} color="default">
+      <AppBar position="static" className={classes.navBarStyle} color="default">
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.grow}>
-            <NavLink to="" style={{'color': 'white'}}>HackUPC Mentors</NavLink>
+            <NavLink to="" className={classes.navBarTitle} >HackUPC Mentors</NavLink>
           </Typography>
           {rightLinks}
         </Toolbar>

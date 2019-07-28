@@ -5,3 +5,4 @@
 /backend/_build
 /frontend/build
 node_modules
+npm-debug.log

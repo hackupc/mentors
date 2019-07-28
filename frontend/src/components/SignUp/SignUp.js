@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -9,45 +10,22 @@ import Card from '@material-ui/core/Card';
 
 
 import { register } from '../../API/API'
+import { Typography } from '@material-ui/core';
 
-const styles = theme => ({
-    card: {
-        minWidth: 275,
-        maxWidth: 300,
-        margin: 16,
-    },
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
-    },
-    dense: {
-      marginTop: 19,
-    },
-    menu: {
-      width: 200,
-    },
-    button: {
-        margin: theme.spacing.unit,
-        width: '200px',
-        backgroundColor: '#d13f5a',
-        "&:hover": {
-            backgroundColor: "#d13f5a"
-        }
-      },
-  });
+import { styles } from '../Styles'
 
 class SignUp extends Component {
     state = {
         email: null,
         name: null,
         password: null,
-        confirm_password: null,
+        confirmPassword: null,
         contact: null,
         open: false,
         registered: false,
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'center',
+        snackbarMsm: ''
     }
 
     cookies = this.props.cookies;
@@ -85,63 +63,92 @@ class SignUp extends Component {
             return <Redirect to='/log-in'/>;
         }
         return(
-            <center>
-                <Card className={classes.card}>
-                <form noValidate autoComplete="off">
-                    <center>
-                    <TextField
-                        id="name"
-                        label="Name"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    /><br/>
-                    <TextField
-                        id="email"
-                        label="Email"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    /><br/>
-                    <TextField
-                        id="contact"
-                        label="Contact (slack)"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    /><br/>
-                    <TextField
-                        id="password"
-                        label="Password"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                        type='password'
-                    /><br/>
-                    {/* <TextField
-                        id="confirm_password"
-                        label="Confirm Password"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                        type='password'
-                    /><br/> */}
-                    <Button variant="contained" color="primary" className={classes.button} onClick={this.signUp}>
-                        Register
-                    </Button>
-                    </center>
-                </form>
-                <Snackbar
-                    anchorOrigin={{ vertical, horizontal }}
-                    open={open}
-                    onClose={this.handleClose}
-                    ContentProps={{
-                        'aria-describedby': 'message-id',
-                    }}
-                    message={<span id="message-id"> There was an error. </span>}
-                />
-            </Card>
-            </center>
+            <Grid container >
+                <Grid item xs = {4} ></Grid>
+                <Grid item xs = {4} >
+                    <Card className={classes.card}>
+                        <form noValidate autoComplete="off">
+                            <Typography
+                            className = {classes.title}
+                                component = "h1" 
+                                variant = "h5"
+                            >Sign Up</Typography>
+                            <TextField
+                                autoFocus
+                                fullWidth
+                                id = "name"
+                                label = "Name"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                required
+                            ></TextField>
+                            <TextField
+                                autoComplete = 'email'
+                                fullWidth
+                                id = "email"
+                                label = "Email"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                required
+                                value = {this.state.email}
+                                error = {this.state.email && !this.state.email.includes("@")}
+                                helperText = {this.state.email && !this.state.email.includes("@") ? 'Email is not valid' : ''}
+                                ></TextField>
+                            <TextField
+                                fullWidth
+                                id = "contact"
+                                label = "Contact (slack)"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                required
+                                ></TextField>
+                            <TextField
+                                fullWidth
+                                id = "password"
+                                label = "Password"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                type = 'password'
+                                required
+                                value = {this.state.password}
+                                ></TextField>
+                            <TextField
+                                fullWidth
+                                id = "confirmPassword"
+                                label = "Confirm Password"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                type = 'password'
+                                required
+                                value = {this.state.confirmPassword}
+                                error = {this.state.confirmPassword !== this.state.password}
+                                helperText = {this.state.confirmPassword !== this.state.password ? 'Passwords are not the same' : ''}
+                            ></TextField>
+                            <Button
+                                fullWidth
+                                variant = "contained" 
+                                color = "primary" 
+                                className = {classes.button} 
+                                onClick = {this.signUp}
+                                disabled = {!(this.state.confirmPassword === this.state.password && this.state.email &&
+                                            this.state.email.includes("@") && this.state.name && this.state.password &&
+                                            this.state.contact)}
+                            >Sign Up</Button>
+                        </form>
+                        <Snackbar
+                            className = {classes.snackbar}
+                            anchorOrigin={{ vertical, horizontal }}
+                            open={open}
+                            onClose={this.handleClose}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">There has been a problem. Please try again.</span>}
+                        />
+                    </Card>
+            </Grid>
+            <Grid item xs = {4} ></Grid>
+        </Grid>
         );
     }
 }

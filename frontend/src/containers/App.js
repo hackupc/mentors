@@ -28,10 +28,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <NavBar email={this.props.cookies.get('email')} cookies={this.props.cookies}></NavBar>
+          <NavBar email={this.props.cookies.get('email')} name={this.props.cookies.get('name')} cookies={this.props.cookies}></NavBar>
           <Route path="/" exact render={() => <WelcomePage cookies={this.props.cookies}></WelcomePage>}/>
           <Route path="/log-in" exact render={() => <LogIn onLogin={this.onLogin} cookies={this.props.cookies}></LogIn>}/>
-          <Route path="/sign-in" exact render={() => <SignUp cookies={this.props.cookies}></SignUp>}/>
+          <Route path="/sign-up" exact render={() => <SignUp cookies={this.props.cookies}></SignUp>}/>
           <Route path="/tickets" exact render={() => <Tickets email={this.props.cookies.get('email')} cookies={this.props.cookies}/>}/>
           <Route path="/tickets/create" render={() => <TicketForm cookies={this.props.cookies}></TicketForm>}/>
           <Route path="/profile" render={() => <Profile cookies={this.props.cookies} name={this.props.cookies.get('name')} email={this.props.cookies.get('email')} contact={this.props.cookies.get('contact')} />}/>
