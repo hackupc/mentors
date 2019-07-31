@@ -27,5 +27,21 @@ const styles = theme => ({
     },
     navBarStyle: {
         backgroundColor: colors.primary
+    },
+    avatar: {
+        backgroundColor: colors.secundary,
+        marginLeft: 10,
+        cursor: 'pointer'
+    },
+    menu: {
+        marginTop:40
+    },
+    menuItem: {
+        '&:focus' : {
+            backgroundColor: 'white'
+        },
+        '&:hover': {
+            backgroundColor: colors.navBarButtonBackground
+        }
     }
 })

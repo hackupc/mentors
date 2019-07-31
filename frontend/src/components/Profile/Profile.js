@@ -35,14 +35,6 @@ class profile extends Component {
         horizontal: 'center',
     }
 
-    logOut = () => {
-        this.props.cookies.remove("token");
-        this.props.cookies.remove("email");
-        this.props.cookies.remove("name");
-        this.props.cookies.remove("user_id");
-        this.props.cookies.remove("contact");
-        window.location = "/";
-    }
 
     handleChange = event => {
         this.setState({
