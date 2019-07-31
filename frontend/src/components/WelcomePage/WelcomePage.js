@@ -19,7 +19,6 @@ class WelcomePage extends Component {
                     <Card className={classes.card}>
                         <Typography 
                             variant="display1" 
-                            
                             className = {classes.text}
                             >Welcome to HackUPC mentors!</Typography>
                         <Typography 

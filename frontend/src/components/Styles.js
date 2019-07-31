@@ -1,4 +1,4 @@
-export {colors, globalButton, globalCard };
+export {colors, globalButton, globalCard, titleCard, snackbar };
 
 const colors = {
     primary: '#f8f8f8',
@@ -6,7 +6,7 @@ const colors = {
     navBarText: '#555',
     navBarButtonBackground: '#e7e7e7',
     text: 'black',
-    
+    cancel: '#FF8A65'
 }
 
 const globalCard = {
@@ -23,4 +23,13 @@ const globalButton = {
     "&:hover": {
         backgroundColor: colors.secundary,
     }
+};
+
+const titleCard = {
+    textAlign: 'Left',
+    fontWeight: 'normal'
+};
+
+const snackbar = {
+    marginBottom: 20
 };

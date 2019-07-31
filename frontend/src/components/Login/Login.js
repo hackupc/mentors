@@ -74,8 +74,7 @@ class Login extends Component {
                     <Card className = {classes.card} >
                         <form noValidate>
                             <Typography 
-                                component="h1" 
-                                variant="h5"
+                                variant="h4"
                                 className = {classes.title}
                             >Log in</Typography>
                             <TextField

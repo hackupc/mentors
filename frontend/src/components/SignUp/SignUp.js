@@ -70,8 +70,7 @@ class SignUp extends Component {
                         <form noValidate autoComplete="off">
                             <Typography
                             className = {classes.title}
-                                component = "h1" 
-                                variant = "h5"
+                                variant = "h4"
                             >Sign Up</Typography>
                             <TextField
                                 autoFocus

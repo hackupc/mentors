@@ -1,14 +1,9 @@
-import { globalCard, globalButton } from '../Styles'
+import { globalCard, globalButton, titleCard, snackbar } from '../Styles'
 export {styles}
 
 const styles = theme => ({
     card: globalCard,
     button: globalButton,
-    snackbar: {
-        marginBottom: 20
-    },
-    title: {
-        textAlign: 'Left',
-        fontWeight: 'normal'
-    },
+    snackbar: snackbar,
+    title: titleCard,
 })

@@ -3,12 +3,15 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 
 import { NavLink } from 'react-router-dom';
 
 import Aux from '../../hoc/Aux'
 
 import { styles } from './NavBarStyle'
+
+
 
 
 const ButtonAppBar = (props) => {
