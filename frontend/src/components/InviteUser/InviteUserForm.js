@@ -1,38 +1,23 @@
 import React, { Component } from 'react';
-
-import Aux from '../../hoc/Aux'
+import Snackbar from '@material-ui/core/Snackbar';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { inviteUser } from '../../API/API'
+import Typography from '@material-ui/core/Typography';
 
 
-const styles = theme => ({
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
-    },
-    dense: {
-      marginTop: 19,
-    },
-    menu: {
-      width: 200,
-    },
-    button: {
-        margin: theme.spacing.unit,
-        width: '200px',
-        backgroundColor: '#d13f5a',
-        "&:hover": {
-            backgroundColor: "#d13f5a"
-        }
-      },
-});
+import { styles } from './InviteUserFormStyle'
+
 
 class InviteUserForm extends Component {
 
     state = {
-        email: null
+        email: null,
+        notification: '',
+        vertical: 'bottom',
+        horizontal: 'center',
+        open: false
     }
 
     cookies = this.props.cookies
@@ -40,11 +25,19 @@ class InviteUserForm extends Component {
     handleTicketSubmit = () => {
         inviteUser(this.state.email, this.props.cookies.get('token'),
         (response) => {
-
+            console.log(response.data);
+            this.state.notification = 'Email sent successfully';
+            this.setState({open: true})
         }, (error) => {
-
+            console.log(error);
+            this.state.notification = 'There has been an error';
+            this.setState({open: true})
         });
     }
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     handleChange = event => {
         this.setState({
@@ -54,26 +47,50 @@ class InviteUserForm extends Component {
 
     render() {
         const { classes } = this.props;
+        const { vertical, horizontal, open } = this.state;
         return (            
-        <Aux>
             <form noValidate autoComplete='off'>
-                <center>
-                <h4>Invite mentor</h4>
-                <p>An email with an invitation code will be send to the mentor. Then they have to register on <strong>/mentors/register</strong>.</p>
-                <p>(They must use the same email they received the code to register).</p>
+                <Typography
+                    variant = 'h4'
+                    className={classes.title}
+                >Invite mentor</Typography>
+                <Typography
+                    variant = 'subtitle1'
+                >An email with an invitation code will be send to the mentor. Then they have to register on <strong>/mentors/register</strong>.</Typography>
+                <Typography
+                    variant = 'subtitle1'
+                >(They must use the same email they received the code to register).</Typography>
                 <TextField
                     id='email'
                     label='Email'
-                    className={classes.textField}
                     margin='normal'
                     onChange={this.handleChange}
+                    fullWidth
+                    name="email"
+                    autoFocus
+                    value = {this.state.email}
+                    error = {this.state.email && !this.state.email.includes("@")}
+                    helperText = {this.state.email && !this.state.email.includes("@") ? 'Email is not valid' : ''}
                 /><br/>
-                <Button variant='contained' color='primary' className={classes.button} onClick={this.handleTicketSubmit}>
-                    Invite user
-                </Button>
-                </center>
+                <Button
+                    fullWidth
+                    variant='contained' 
+                    color='primary' 
+                    className={classes.button} 
+                    onClick={this.handleTicketSubmit}
+                    disabled = {!(this.state.email && this.state.email.includes("@"))}
+                >Invite mentor</Button>
+                <Snackbar
+                    className={classes.snackbar}
+                    anchorOrigin={ {vertical, horizontal} }
+                    open={open}
+                    onClose={this.handleClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">{this.state.notification}</span>}
+                ></Snackbar>
             </form>
-        </Aux>
         );
     }
 }

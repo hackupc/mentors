@@ -1,69 +1,33 @@
 import React, { Component } from 'react';
 
 import Card from '@material-ui/core/Card';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import { Redirect } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
+
 
 import InviteUserForm from '../InviteUser/InviteUserForm'
 
 import { getUsers } from '../../API/API'
 
-const styles = theme => ({
-    root: {
-        padding: 16,
-        width: '100%',
-        maxWidth: 500,
-    },
-    button: {
-        margin: theme.spacing.unit,
-        position: 'fixed',
-        right: 16,
-        bottom: 16,
-        backgroundColor: '#d13f5a'
-    },
-    topButton: {
-        margin: theme.spacing.unit,
-        position: 'fixed',
-        top: 68,
-        right: 16,
-        backgroundColor: '#d13f5a'
-    },
-    extendedIcon: {
-        marginRight: theme.spacing.unit,
-    },
-    paper: {
-        position: 'absolute',
-        width: theme.spacing.unit * 50,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing.unit * 4,
-    },
-    error: {
-        marginTop: 30
-    }
-});
-
-function getModalStyle() {
-    const top = 50;
-    const left = 50;
-  
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-}
+import { styles } from './AdminStyles'
 
 class Admin extends Component {
     cookies = this.props.cookies
 
     state = {
         users: [],
-        showAddUsers: false
+        showAddUsers: false,
+        nRow: true
     }
 
     componentDidMount() {
@@ -110,33 +74,63 @@ class Admin extends Component {
         let usersList;
         if (this.state.users) {
             usersList = this.state.users.map((user) => {
-                return <ListItem>{user.name}, {user.email} {this.getRoleForUser(user)}</ListItem>
+                this.state.nRow = !this.state.nRow
+                return (
+                    <TableRow className= {this.state.nRow ? classes.rowNonPair : classes.rowPair}>
+                        <TableCell className={classes.tableBody}>{user.name}</TableCell>
+                        <TableCell className={classes.tableBody}>{user.email}</TableCell>
+                        <TableCell className={classes.tableBody}>{this.getRoleForUser(user)}</TableCell>
+                    </TableRow>
+                )
             })
         }
 
         return (
-            <div>
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.showAddUsers}
-                    onClose={this.handleClose}>
-                    <div style={getModalStyle()} className={classes.paper}>
-                        <InviteUserForm cookies={this.cookies}></InviteUserForm>
-                    </div>
-                </Modal>
-                <center>
-                    <div className={classes.root}>
-                        <Card>
-                            <h4>Users</h4>
-                            <List>
+            <Grid container >
+                <Grid item xs = {4} ></Grid>
+                <Grid item xs = {4} >
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.showAddUsers}
+                        onClose={this.handleClose}>
+                        <Grid container >
+                            <Grid item xs = {4} ></Grid>
+                            <Grid item xs = {4} >
+                                <div className={classes.paper}>
+                                <InviteUserForm cookies={this.cookies}></InviteUserForm>
+                                </div>
+                            </Grid>
+                        <Grid item xs={4}></Grid>
+                        </Grid>
+                    </Modal>
+                    <Card className = {classes.card}>
+                        <Typography
+                            variant="h4"
+                            className = {classes.title}
+                        >Users</Typography>
+                        <Table className={classes.table}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell className={classes.tableHead}>Names</TableCell>
+                                    <TableCell className={classes.tableHead}>Emails</TableCell>
+                                    <TableCell className={classes.tableHead}>Roles</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
                                 {usersList}
-                            </List>
-                        </Card>
-                    </div>
-                    <Button variant="contained" style={styles.button} onClick={this.handleOpen}>Invite mentor</Button>
-                </center>
-            </div>
+                            </TableBody>
+                        </Table>
+                        <Button 
+                            variant="contained" 
+                            className={classes.button} 
+                            onClick={this.handleOpen}
+                            fullWidth
+                        >Invite mentor</Button>
+                    </Card>
+                </Grid>
+                <Grid item xs={4}></Grid>
+            </Grid>
         )
     }
 }

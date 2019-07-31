@@ -15,12 +15,12 @@ const styles = theme => ({
         opacity : 0.8,
         '&:hover': {
             opacity : 1,
-            backgroundColor: colors.navBarButtonBackground
+            backgroundColor: colors.backgroundSecundary
         }
     },
     navBarLinkActive: {
         opacity: 1,
-        backgroundColor: colors.navBarButtonBackground
+        backgroundColor: colors.backgroundSecundary
     },
     navBarTitle: {
         color: colors.navBarText
@@ -41,7 +41,7 @@ const styles = theme => ({
             backgroundColor: 'white'
         },
         '&:hover': {
-            backgroundColor: colors.navBarButtonBackground
+            backgroundColor: colors.backgroundSecundary
         }
     }
 })
