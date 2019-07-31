@@ -12,7 +12,7 @@ import Card from '@material-ui/core/Card';
 import { register } from '../../API/API'
 import { Typography } from '@material-ui/core';
 
-import { styles } from '../Styles'
+import { styles } from './SignUpStyle'
 
 class SignUp extends Component {
     state = {

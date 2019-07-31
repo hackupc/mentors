@@ -5,14 +5,14 @@ import { Redirect } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { withStyles, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 
 import { login } from '../../API/API'
 
-import { styles } from '../Styles'
+import { styles } from './LoginStyle'
 
 class Login extends Component {
     state = {
@@ -86,7 +86,6 @@ class Login extends Component {
                                 required
                                 fullWidth
                                 name="email"
-                                autoComplete="email"
                                 autoFocus
                                 value = {this.state.email}
                                 error = {this.state.email && !this.state.email.includes("@")}

@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 
 import Aux from '../../hoc/Aux'
 
-import { styles } from '../Styles'
+import { styles } from './NavBarStyle'
 
 
 const ButtonAppBar = (props) => {
