@@ -1,6 +1,6 @@
 const colors = {
     primary: '#f8f8f8',
-    secundary: '#b4c959',
+    secundary: '#9CCC65',
     navBarText: '#555',
     text: 'black',
     cancel: '#FF8A65',

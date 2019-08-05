@@ -27,7 +27,7 @@ class Admin extends Component {
     state = {
         users: [],
         showAddUsers: false,
-        nRow: true
+        nRow: false
     }
 
     componentDidMount() {
