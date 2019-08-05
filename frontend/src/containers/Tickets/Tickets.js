@@ -1,86 +1,68 @@
 import React, { Component } from 'react';
-
-import TicketCard from '../../components/TicketCard/TicketCard';
 import { loadTickets } from '../../API/API'
-
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
-
-import Modal from '@material-ui/core/Modal';
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TicketForm from '../../components/TicketForm/TicketForm'
-import TicketDetail from '../../components/TicketDetail/TicketDetail'
-
-import './Tickets.css'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import FormGroup from "@material-ui/core/FormGroup";
 import { Typography } from '@material-ui/core';
+import { styles } from './TicketsStyle'
 
-const styles = theme => ({
-    button: {
-      margin: theme.spacing.unit,
-      position: 'fixed',
-      right: 16,
-      bottom: 16,
-      backgroundColor: '#d13f5a',
-      "&:hover": {
-          backgroundColor: "#d13f5a"
-      }
-    },
-    topButton: {
-      margin: theme.spacing.unit,
-      position: 'fixed',
-      top: 68,
-      right: 16
-    },
-    extendedIcon: {
-      marginRight: theme.spacing.unit,
-    },
-    paper: {
-        position: 'absolute',
-        width: theme.spacing.unit * 50,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing.unit * 4,
-    },
-    card: {
-        marginLeft: '7%',
-        marginRight: '7%',
-        marginTop: 30,
-        fontFamily: 'ProximaNovaRegular, roboto, sans-serif',
-        padding: 35,
-    },
-    errorText: {
-        textAlign: 'center',
-        fontWeight: 'normal'
-    },
-    errorLink: {
-        color: '#b4c959',
+import { claimTicket, unClaimTicket, deleteTicket } from '../../API/API';
 
-    }
-});
-
-function getModalStyle() {
-    const top = 50;
-    const left = 50;
-  
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-}
 
 class Tickets extends Component {
     cookies = this.props.cookies
-
+    
     state = {
         tickets: [],
         showAll: true,
         open: false,
         editing: false,
-        selectedTicket: null
+        selectedTicket: null,
+        color: false
+    }
+    
+    claim(ticket, user_id, token) {
+        console.log("claiming");
+        console.log(ticket);
+        claimTicket(ticket, token, user_id, (response) => {
+            this.props.onClaim(response);
+        }, (error) => {
+            
+        });
+        window.location.reload();
+    }
+    
+    unClaim(ticket, token) {
+        console.log("reopening");
+        console.log(ticket);
+        unClaimTicket(ticket, token, (response) => {
+            this.props.onClaim(response)
+        }, (error) => {
+    
+        });
+        window.location.reload();
+
+    }
+    
+    deleteButton(ticket, token) {
+        console.log("reopening");
+        console.log(ticket);
+        deleteTicket(ticket, token, (response) => {
+            this.props.onClaim(response)
+        }, (error) => {
+    
+        });
+        window.location.reload();
+
     }
 
     ticketsLoadedHandler = (tickets) => {
@@ -93,6 +75,7 @@ class Tickets extends Component {
     }
 
     toggleShow = () => {
+        this.state.color = false;
         let showStatus = this.state.showAll;
         this.setState({showAll: !showStatus});
     }
@@ -137,17 +120,71 @@ class Tickets extends Component {
 
         console.log(this.props.cookies.get('user_id'));
         let t = this.state.tickets
-            .filter((ticket) => !ticket.claimer_id || !this.state.showAll)
-            .map(ticket =>{
+        .filter((ticket) => !ticket.claimer_id || !this.state.showAll)
+        .map(ticket =>{
+            this.state.color = !this.state.color;
                 return (
-                        <Grid item key={ticket.id} xs={12} sm={3}>
-                            <TicketCard 
-                                mine={ticket.user_id == this.props.cookies.get('user_id')}
-                                ticket={ticket}
-                                cookies={this.props.cookies}
-                                onClaim={this.onTicketClaimed}
-                                onView={this.handleEditing}/>
-                        </Grid>
+                    <ExpansionPanel
+                        className = {this.state.color ? classes.ticket: classes.ticket2}
+                    >
+                        <ExpansionPanelSummary
+                            expandIcon={<ExpandMoreIcon />}
+                        >
+                            <Grid container>
+                                <Grid item xs = {10} >
+                                    <Typography
+                                        variant = 'h6'
+                                    >{ticket.name}</Typography>
+                                    <Typography
+                                        variant = 'subtitle1'
+                                    >Needs help in: {ticket.topic}</Typography>
+                                </Grid>
+                                <Grid item xs = {2}>
+                                    <Typography
+                                        variant = 'subtitle1'
+                                        align = 'right'
+                                        className = { ticket.claimer_id ? classes.claimText : classes.waitingText }
+                                    >{ticket.claimer_id ? 'Claimed' : 'On wait'}</Typography>
+                                </Grid>
+                            </Grid>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                            <div
+                                style = {{ width: '100%'}}
+                            >
+                                <Typography
+                                    variant = 'subtitle1'
+                                ><strong>Location: </strong>{ticket.location}</Typography>
+                                <Typography
+                                    variant = 'subtitle1'
+                                ><strong>Slack: </strong>{ticket.contact}</Typography>
+                                <Typography
+                                    variant = 'subtitle1'
+                                ><strong>Description: </strong>{ticket.comments}</Typography>
+                                {ticket.claimer_id ? 
+                                    <div>
+                                        <Button
+                                            className = { classes.button }
+                                            fullWidth
+                                            onClick = {() => this.unClaim(ticket, this.props.cookies.get('token'))}
+                                        >Reopen</Button>
+                                        <Button
+                                            className = { classes.removeButton }
+                                            fullWidth
+                                            onClick = {() => this.deleteButton(ticket, this.props.cookies.get('token'))}
+                                        >Remove</Button>
+                                    </div>
+                                    :
+                                    <Button
+                                        className = { classes.button }
+                                        fullWidth
+                                        onClick={() => this.claim(ticket, this.props.cookies.get('user_id'), this.props.cookies.get('token'))}
+                                    >Claim</Button>
+                                }
+                                
+                            </div>
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
                 )
             });
         
@@ -170,44 +207,51 @@ class Tickets extends Component {
             )
         }
 
-        return (
-            <div>
-                {this.props.cookies.get('is_admin') === "true" || this.props.cookies.get('is_mentor') === "true" ? <Button variant="contained" className={classes.topButton} onClick={this.toggleShow}>{this.state.showAll ? "Show claimed" : "Show pending"}</Button> : null}
-                <center>
-                    <h3>Tickets</h3>
-                    <Grid container spacing={32} className={classes.demo} justify="center">
-                        {t}
-                    </Grid>     
-                </center>
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.open}
-                    onClose={this.handleClose}>
-                        <div style={getModalStyle()} className={classes.paper}>
+        if (this.cookies.get('is_hacker') === "true") {
+            return (
+                <Grid container >
+                    <Grid item xs = {4} ></Grid>
+                    <Grid item xs = {4} >
+                        <Card className = {classes.card} >
                             <TicketForm cookies={this.cookies} onCreate={this.onCreateTicket}></TicketForm>
-                            
-                        </div>
-                </Modal>
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.editing}
-                    onClose={this.handleEndEditing}>
-                        <div style={getModalStyle()} className={classes.paper}>
-                            <TicketDetail 
-                                ticket={this.state.selectedTicket}
-                                cookies={this.cookies}
-                                onEdit={this.onEditTicket}
-                                onDelete={this.onDeleteTicket}/>
-                            
-                        </div>
-                </Modal>
-                {this.props.cookies.get('is_hacker') ? <Button variant="fab" color="primary" aria-label="Add" className={classes.button} onClick={this.handleOpen}>
-                    <AddIcon />
-                </Button> : null}
-                
-            </div>
+                        </Card>
+                    </Grid>
+                <Grid item xs={4}></Grid>
+            </Grid>
+            )
+        }
+
+        return (
+            <Grid container >
+                <Grid item xs = {3} ></Grid>
+                <Grid item xs = {6} >
+                    <Card className = {classes.card} >
+                        <Grid container >
+                            <Grid item xs= {10}>
+                                <Typography
+                                    variant = 'h4'
+                                    className = { classes.title }
+                                >Tickets</Typography>
+                            </Grid>
+                            <Grid item xs = {2} >
+                                <FormGroup>
+                                    <FormControlLabel
+                                        value="start"
+                                        control={<Switch
+                                                onChange = {this.toggleShow}
+                                            ></Switch>}
+                                        label="Claimed"
+                                        labelPlacement="start"
+                                        className = { classes.switch }
+                                    />
+                                </FormGroup>
+                            </Grid>
+                        </Grid>
+                            {t}
+                        </Card>
+                    </Grid>
+                <Grid item xs={3}></Grid>
+            </Grid>
         )
     }
 }
