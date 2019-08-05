@@ -62,6 +62,10 @@ class SignUp extends Component {
         if (this.state.registered) {
             return <Redirect to='/log-in'/>;
         }
+        if (this.cookies.get('user_id')) {
+            console.log('redirecting');
+            return <Redirect to='/tickets'/>;
+        }
         return(
             <Grid container >
                 <Grid item xs = {4} ></Grid>
@@ -69,7 +73,6 @@ class SignUp extends Component {
                     <Card className={classes.card}>
                         <form noValidate autoComplete="off">
                             <Typography
-                            className = {classes.title}
                                 variant = "h4"
                             >Sign Up</Typography>
                             <TextField

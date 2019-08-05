@@ -1,10 +1,9 @@
-import { colors, globalCard, globalButton, titleCard, snackbar } from '../Styles'
+import { colors, globalCard, globalButton, snackbar } from '../Styles'
 export { styles }
 
 const styles = {
     card: globalCard,
     button: globalButton,
-    title: titleCard,
     snackbar: snackbar,
     cancelButton: {
         marginTop: 10,

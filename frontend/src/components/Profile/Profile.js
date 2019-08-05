@@ -111,7 +111,6 @@ class profile extends Component {
                     <Card className = {classes.card} >
                         <Typography
                             variant="h4"
-                            className = {classes.title}
                         >{this.props.name}</Typography>
                         <Typography
                             variant="subtitle1"

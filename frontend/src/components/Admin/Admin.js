@@ -107,7 +107,6 @@ class Admin extends Component {
                     <Card className = {classes.card}>
                         <Typography
                             variant="h4"
-                            className = {classes.title}
                         >Users</Typography>
                         <Table className={classes.table}>
                             <TableHead>

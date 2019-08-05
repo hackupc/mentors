@@ -12,7 +12,6 @@ const styles = theme => ({
         padding: theme.spacing.unit * 4,
     },
     card: globalCard,
-    title: titleCard,
     tableHead: {
         color: colors.text,
         fontSize: '1rem',

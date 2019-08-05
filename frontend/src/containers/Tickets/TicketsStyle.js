@@ -1,11 +1,10 @@
-import { globalCard, globalButton, titleCard, colors } from '../../components/Styles'
+import { globalCard, globalButton, colors } from '../../components/Styles'
 export { styles }
 
 
 const styles = theme => ({
     button: globalButton,
     card: globalCard,
-    title: titleCard,
     removeButton: {
         marginTop: 10,
         backgroundColor: colors.cancel,

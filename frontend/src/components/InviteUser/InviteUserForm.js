@@ -52,7 +52,6 @@ class InviteUserForm extends Component {
             <form noValidate autoComplete='off'>
                 <Typography
                     variant = 'h4'
-                    className={classes.title}
                 >Invite mentor</Typography>
                 <Typography
                     variant = 'subtitle1'

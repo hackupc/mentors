@@ -1,4 +1,4 @@
-import { globalButton, titleCard, snackbar } from '../Styles'
+import { globalButton, snackbar } from '../Styles'
 export { styles }
 
 const styles = theme => ({
@@ -14,6 +14,5 @@ const styles = theme => ({
       width: 200,
     },
     button: globalButton,
-    title: titleCard,
     snackbar: snackbar
 });

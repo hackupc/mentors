@@ -1,5 +1,3 @@
-export {colors, globalButton, globalCard, titleCard, snackbar };
-
 const colors = {
     primary: '#f8f8f8',
     secundary: '#b4c959',
@@ -28,11 +26,8 @@ const globalButton = {
     color: colors.text
 };
 
-const titleCard = {
-    textAlign: 'Left',
-    fontWeight: 'normal'
-};
-
 const snackbar = {
     marginBottom: 20
 };
+
+export {colors, globalButton, globalCard, snackbar };

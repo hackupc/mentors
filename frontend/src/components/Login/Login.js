@@ -63,7 +63,7 @@ class Login extends Component {
     render() {
         const { classes } = this.props;
         const { vertical, horizontal, open } = this.state;
-        if (this.state.redirect) {
+        if (this.state.redirect || this.cookies.get('user_id')) {
             console.log('redirecting');
             return <Redirect to='/tickets'/>;
         }
@@ -75,7 +75,6 @@ class Login extends Component {
                         <form noValidate>
                             <Typography 
                                 variant="h4"
-                                className = {classes.title}
                             >Log in</Typography>
                             <TextField
                                 id='email'
