@@ -47,7 +47,6 @@ const ButtonAppBar = (props) => {
 
   let rightLinks;
   let admin = null;
-  console.log(props.cookies.get('is_admin'));
   let isAdmin = props.cookies.get('is_admin');
   if (isAdmin === "true") {
     admin = (

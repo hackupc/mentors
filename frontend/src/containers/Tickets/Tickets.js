@@ -2,20 +2,14 @@ import React, { Component } from 'react';
 import { loadTickets } from '../../API/API'
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TicketForm from '../../components/TicketForm/TicketForm'
+import TicketForm from '../../components/TicketForm/TicketForm';
+import TicketCard from '../../components/TicketCard/TicketCard';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from "@material-ui/core/FormGroup";
 import { Typography } from '@material-ui/core';
-import { styles } from './TicketsStyle'
-
-import { claimTicket, unClaimTicket, deleteTicket } from '../../API/API';
+import { styles } from './TicketsStyle';
 
 
 class Tickets extends Component {
@@ -24,49 +18,39 @@ class Tickets extends Component {
     state = {
         tickets: [],
         showAll: true,
-        open: false,
-        editing: false,
-        selectedTicket: null,
-        color: false
-    }
-    
-    claim(ticket, user_id, token) {
-        console.log("claiming");
-        console.log(ticket);
-        claimTicket(ticket, token, user_id, (response) => {
-            this.props.onClaim(response);
-        }, (error) => {
-            
-        });
-        window.location.reload();
-    }
-    
-    unClaim(ticket, token) {
-        console.log("reopening");
-        console.log(ticket);
-        unClaimTicket(ticket, token, (response) => {
-            this.props.onClaim(response)
-        }, (error) => {
-    
-        });
-        window.location.reload();
-
-    }
-    
-    deleteButton(ticket, token) {
-        console.log("reopening");
-        console.log(ticket);
-        deleteTicket(ticket, token, (response) => {
-            this.props.onClaim(response)
-        }, (error) => {
-    
-        });
-        window.location.reload();
-
+        color: false,
+        expanded: null
     }
 
     ticketsLoadedHandler = (tickets) => {
         this.setState({tickets: tickets.data});
+    }
+    
+    claimPress = (ticket, user_id) => {
+        let updatedTickets = this.state.tickets;
+        let found = false;
+        for (let i = 0; i < updatedTickets.length && !found; i++) {
+            if (updatedTickets[i].id === ticket.id) {
+                updatedTickets[i].claimer_id = user_id;
+                found = true;
+            }
+        }
+        this.setState({tickets: updatedTickets});        
+        this.setState({color: false});
+    }
+
+    deleteTicket = (ticket) => {
+        let updatedTickets = this.state.tickets;
+        let found = false;
+        let i;
+        for (i = 0; i < updatedTickets.length && !found; i++) {
+            if (updatedTickets[i].id === ticket.id) {
+                found = true;
+            }
+        }
+        updatedTickets.splice(i,1);
+        this.setState({tickets: updatedTickets});
+        this.setState({color: false});
     }
 
     componentDidMount () {
@@ -80,111 +64,33 @@ class Tickets extends Component {
         this.setState({showAll: !showStatus});
     }
 
-    handleOpen = () => {
-        this.setState({ open: true });
-    };
-    
-    handleClose = () => {
-        this.setState({ open: false });
-    };
-
-    handleEditing = (ticket) => {
-        this.setState({selectedTicket: ticket})
-        this.setState({ editing: true})
-    }
-
-    handleEndEditing = () => {
-        this.setState({selectedTicket: null})
-        this.setState({ editing: false})
-    }
-
-    onCreateTicket = (ticket) => {
-        let updatedTickets = this.state.tickets;
-        updatedTickets.push(ticket);
-        this.setState({tickets: updatedTickets});
-        this.handleClose();
-    }
-
-    onTicketClaimed = (ticket) => {
-        let updatedTickets = this.state.tickets;
-        for (var i = 0; i < updatedTickets.length; i+=1) {
-            if (updatedTickets[i].id == ticket.id) {
-                updatedTickets[i].claimer_id = ticket.claimer_id;
-            }
+    handleChange = (panelId) => {
+        if (this.state.expanded !== panelId) {
+            this.setState({expanded: panelId});
+        } else {
+            this.setState({expanded: null});            
         }
-        this.setState({tickets: updatedTickets});
+        this.setState({color: false})
     }
     
     render () {
         const { classes } = this.props;
 
-        console.log(this.props.cookies.get('user_id'));
         let t = this.state.tickets
         .filter((ticket) => !ticket.claimer_id || !this.state.showAll)
         .map(ticket =>{
             this.state.color = !this.state.color;
                 return (
-                    <ExpansionPanel
-                        className = {this.state.color ? classes.ticket: classes.ticket2}
-                    >
-                        <ExpansionPanelSummary
-                            expandIcon={<ExpandMoreIcon />}
-                        >
-                            <Grid container>
-                                <Grid item xs = {10} >
-                                    <Typography
-                                        variant = 'h6'
-                                    >{ticket.name}</Typography>
-                                    <Typography
-                                        variant = 'subtitle1'
-                                    >Needs help in: {ticket.topic}</Typography>
-                                </Grid>
-                                <Grid item xs = {2}>
-                                    <Typography
-                                        variant = 'subtitle1'
-                                        align = 'right'
-                                        className = { ticket.claimer_id ? classes.claimText : classes.waitingText }
-                                    >{ticket.claimer_id ? 'Claimed' : 'On wait'}</Typography>
-                                </Grid>
-                            </Grid>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <div
-                                style = {{ width: '100%'}}
-                            >
-                                <Typography
-                                    variant = 'subtitle1'
-                                ><strong>Location: </strong>{ticket.location}</Typography>
-                                <Typography
-                                    variant = 'subtitle1'
-                                ><strong>Slack: </strong>{ticket.contact}</Typography>
-                                <Typography
-                                    variant = 'subtitle1'
-                                ><strong>Description: </strong>{ticket.comments}</Typography>
-                                {ticket.claimer_id ? 
-                                    <div>
-                                        <Button
-                                            className = { classes.button }
-                                            fullWidth
-                                            onClick = {() => this.unClaim(ticket, this.props.cookies.get('token'))}
-                                        >Reopen</Button>
-                                        <Button
-                                            className = { classes.removeButton }
-                                            fullWidth
-                                            onClick = {() => this.deleteButton(ticket, this.props.cookies.get('token'))}
-                                        >Remove</Button>
-                                    </div>
-                                    :
-                                    <Button
-                                        className = { classes.button }
-                                        fullWidth
-                                        onClick={() => this.claim(ticket, this.props.cookies.get('user_id'), this.props.cookies.get('token'))}
-                                    >Claim</Button>
-                                }
-                                
-                            </div>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
+                    <TicketCard 
+                        cookies = {this.cookies} 
+                        ticket = {ticket} 
+                        color = {this.state.color}
+                        claimPress = {this.claimPress}
+                        deleteTicket = {this.deleteTicket}
+                        expanded = {this.state.expanded}
+                        handleChange = {this.handleChange}
+                        key = {ticket.id}
+                    ></TicketCard>
                 )
             });
         
@@ -213,7 +119,7 @@ class Tickets extends Component {
                     <Grid item xs = {4} ></Grid>
                     <Grid item xs = {4} >
                         <Card className = {classes.card} >
-                            <TicketForm cookies={this.cookies} onCreate={this.onCreateTicket}></TicketForm>
+                            <TicketForm cookies={this.cookies}></TicketForm>
                         </Card>
                     </Grid>
                 <Grid item xs={4}></Grid>

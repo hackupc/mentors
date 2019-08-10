@@ -5,7 +5,8 @@ const colors = {
     text: 'black',
     cancel: '#FF8A65',
     backgroundPrimary: 'white',
-    backgroundSecundary: '#e7e7e7'
+    backgroundSecundary: '#e7e7e7',
+    darkSecundary: '#33691E'
 }
 
 const globalCard = {
