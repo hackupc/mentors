@@ -28,7 +28,7 @@ const styles = theme => ({
         backgroundColor: colors.backgroundPrimary,
     },
     rowNonPair: {
-        backgroundColor: colors.backgroundSecundary,
+        backgroundColor: colors.backgroundSecondary,
     },
     table: {
         width: '100%'

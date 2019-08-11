@@ -4,7 +4,7 @@ export { styles }
 const styles = theme => ({
     card: globalCard,
     link: {
-        color: colors.secundary
+        color: colors.secondary
     },
     text: {
         fontWeight: 'normal',

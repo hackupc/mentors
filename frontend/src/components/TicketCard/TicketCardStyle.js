@@ -13,15 +13,15 @@ const styles = theme => ({
         color: colors.text
     },
     ticket: {
-        background: colors.backgroundSecundary
+        background: colors.backgroundSecondary
     },
     claimText: {
         color : colors.cancel
     },
     waitingText: {
-        color: colors.secundary
+        color: colors.secondary
     },
     claimedByText: {
-        color: colors.darkSecundary
+        color: colors.darkSecondary
     }
 });

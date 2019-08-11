@@ -1,12 +1,12 @@
 const colors = {
     primary: '#f8f8f8',
-    secundary: '#9CCC65',
+    secondary: '#9CCC65',
     navBarText: '#555',
     text: 'black',
     cancel: '#FF8A65',
     backgroundPrimary: 'white',
-    backgroundSecundary: '#e7e7e7',
-    darkSecundary: '#33691E'
+    backgroundSecondary: '#e7e7e7',
+    darkSecondary: '#33691E'
 }
 
 const globalCard = {
@@ -20,9 +20,9 @@ const globalCard = {
 
 const globalButton = {
     marginTop: 10,
-    backgroundColor: colors.secundary,
+    backgroundColor: colors.secondary,
     "&:hover": {
-        backgroundColor: colors.secundary,
+        backgroundColor: colors.secuondary,
     },
     color: colors.text
 };

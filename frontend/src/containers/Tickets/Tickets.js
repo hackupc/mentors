@@ -6,10 +6,10 @@ import { withStyles } from '@material-ui/core/styles';
 import TicketForm from '../../components/TicketForm/TicketForm';
 import TicketCard from '../../components/TicketCard/TicketCard';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import FormGroup from "@material-ui/core/FormGroup";
 import { Typography } from '@material-ui/core';
-import { styles } from './TicketsStyle';
+import { styles} from './TicketsStyle';
+import Switch from '@material-ui/core/Switch';
 
 
 class Tickets extends Component {
@@ -21,6 +21,7 @@ class Tickets extends Component {
         color: false,
         expanded: null
     }
+
 
     ticketsLoadedHandler = (tickets) => {
         this.setState({tickets: tickets.data});
@@ -80,7 +81,7 @@ class Tickets extends Component {
     render () {
         const { classes } = this.props;
 
-        let t = this.state.tickets
+        let tickets = this.state.tickets
         .filter((ticket) => !ticket.claimer_id || !this.state.showAll)
         .map(ticket =>{
             this.state.color = !this.state.color;
@@ -178,15 +179,15 @@ class Tickets extends Component {
                                         value="start"
                                         control={<Switch
                                                 onChange = {this.toggleShow}
+                                                color= "primary"
                                             ></Switch>}
                                         label="Claimed"
                                         labelPlacement="start"
-                                        className = { classes.switch }
                                     />
                                 </FormGroup>
                             </Grid>
                         </Grid>
-                            {t}
+                            {tickets}
                         </Card>
                     </Grid>
                 <Grid item xs={3}></Grid>

@@ -1,6 +1,7 @@
-import { globalCard, globalButton, colors } from '../../components/Styles'
-export { styles }
+import { globalCard, globalButton, colors } from '../../components/Styles';
 
+
+export { styles }
 
 const styles = theme => ({
     button: globalButton,
@@ -18,22 +19,20 @@ const styles = theme => ({
         fontWeight: 'normal'
     },
     errorLink: {
-        color: colors.secundary,
+        color: colors.secondary,
 
     },
-    switch: {
-        fontWeight: 1
-    },
     ticket: {
-        background: colors.backgroundSecundary
+        background: colors.backgroundSecondary
     },
     claimText: {
         color : colors.cancel
     },
     waitingText: {
-        color: colors.secundary
+        color: colors.secondary
     },
     title: {
         marginBottom: '1%'
-    }
+    },
+    
 });
