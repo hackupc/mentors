@@ -52,7 +52,7 @@ class TicketCard extends Component {
         console.log("deleting");
         console.log(ticket);
         deleteTicket(ticket, token, (response) => {
-            this.setState({active: false});
+            // this.setState({active: false});
             this.props.deleteTicket(ticket);
         }, (error) => {
             console.log(error);

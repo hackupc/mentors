@@ -40,15 +40,16 @@ class Tickets extends Component {
     }
 
     deleteTicket = (ticket) => {
-        let updatedTickets = this.state.tickets;
+        let updatedTickets = this.state.tickets.splice(0, this.state.tickets.length);
         let found = false;
         let i;
-        for (i = 0; i < updatedTickets.length && !found; i++) {
-            if (updatedTickets[i].id === ticket.id) {
+        for (i = 0; i < this.state.tickets.length && !found; i++) {
+            if (this.state.tickets[i].id === ticket.id) {
                 found = true;
             }
         }
         updatedTickets.splice(i,1);
+        console.log(updatedTickets);
         this.setState({tickets: updatedTickets});
         this.setState({color: false});
     }
