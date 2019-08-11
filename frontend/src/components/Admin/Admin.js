@@ -87,8 +87,8 @@ class Admin extends Component {
 
         return (
             <Grid container >
-                <Grid item xs = {4} ></Grid>
-                <Grid item xs = {4} >
+                <Grid item xs = {3} ></Grid>
+                <Grid item xs = {6} >
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -128,7 +128,7 @@ class Admin extends Component {
                         >Invite mentor</Button>
                     </Card>
                 </Grid>
-                <Grid item xs={4}></Grid>
+                <Grid item xs={3}></Grid>
             </Grid>
         )
     }

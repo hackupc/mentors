@@ -14,20 +14,20 @@ class WelcomePage extends Component {
         const { classes } = this.props;
         return (
             <Grid container >
-                <Grid item xs = {4} ></Grid>
-                <Grid item xs = {4} >
+                <Grid item xs = {3} ></Grid>
+                <Grid item xs = {6} >
                     <Card className={classes.card}>
                         <Typography 
-                            variant="display1" 
+                            variant="h4" 
                             className = {classes.text}
                             >Welcome to HackUPC mentors!</Typography>
                         <Typography 
-                            variant="body1" 
+                            variant="subtitle1" 
                             className = {classes.text}
                         >Need some help? You can submit a ticket <a href='/tickets' className={classes.link}>here</a>.</Typography>
                     </Card> 
                 </Grid>
-                <Grid item xs={4}></Grid>
+                <Grid item xs={3}></Grid>
             </Grid>
         );
     }
