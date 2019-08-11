@@ -20,7 +20,6 @@ class TicketCard extends Component {
     
     state = {
         claimed: this.ticket.claimer_id,
-        active: true,
     }
     
     claim = () => {
@@ -52,7 +51,6 @@ class TicketCard extends Component {
         console.log("deleting");
         console.log(ticket);
         deleteTicket(ticket, token, (response) => {
-            // this.setState({active: false});
             this.props.deleteTicket(ticket);
         }, (error) => {
             console.log(error);
@@ -66,8 +64,25 @@ class TicketCard extends Component {
     
     render() {
         const { classes } = this.props;
-        
-        if (!this.state.active) return null;
+        let claimButton = 
+            <Button
+                className = { classes.button }
+                fullWidth
+                onClick={this.claim}
+            >Claim</Button>;
+        let unClaimbutton = 
+            <Button
+                className = { classes.button }
+                fullWidth
+                onClick = {() => this.unClaim(this.ticket, this.props.cookies.get('token'))}
+            >Reopen</Button>;
+        let removeButton = 
+            <Button
+                className = { classes.removeButton }
+                fullWidth
+                onClick = {() => this.deleteButton(this.ticket, this.props.cookies.get('token'))}
+            >Remove</Button>;
+        const is_hacker = this.cookies.get('is_hacker') === 'true';
         return (
             <ExpansionPanel
                 className = {this.props.color ? classes.ticket: null}
@@ -108,26 +123,20 @@ class TicketCard extends Component {
                         <Typography
                             variant = 'subtitle1'
                         ><strong>Description: </strong>{this.ticket.comments}</Typography>
-                        {this.state.claimed ? 
+                        {!is_hacker ?
+                            (this.state.claimed ? 
                                 (this.state.claimed == this.cookies.get('user_id') ? 
-                                <Button
-                                    className = { classes.button }
-                                    fullWidth
-                                    onClick = {() => this.unClaim(this.ticket, this.props.cookies.get('token'))}
-                                >Reopen</Button> : null )
+                                    unClaimbutton 
+                                    :
+                                    null)
+                                :
+                                claimButton)
                             :
-                            <Button
-                            className = { classes.button }
-                            fullWidth
-                            onClick={this.claim}
-                            >Claim</Button>
-                        }
-                        {this.cookies.get('is_admin') ? 
-                        <Button
-                            className = { classes.removeButton }
-                            fullWidth
-                            onClick = {() => this.deleteButton(this.ticket, this.props.cookies.get('token'))}
-                        >Remove</Button> : null}
+                            null}
+                        {this.cookies.get('is_admin') || this.cookies.get('user_id') == this.ticket.user_id ? 
+                            removeButton 
+                            : 
+                            null}
                         
                     </div>
                 </ExpansionPanelDetails>

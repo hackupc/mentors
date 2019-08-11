@@ -32,5 +32,8 @@ const styles = theme => ({
     },
     waitingText: {
         color: colors.secundary
+    },
+    title: {
+        marginBottom: '1%'
     }
 });

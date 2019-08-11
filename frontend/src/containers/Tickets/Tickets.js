@@ -27,7 +27,7 @@ class Tickets extends Component {
     }
     
     claimPress = (ticket, user_id) => {
-        let updatedTickets = this.state.tickets;
+        let updatedTickets = this.state.tickets.splice(0, this.state.tickets.length);        
         let found = false;
         for (let i = 0; i < updatedTickets.length && !found; i++) {
             if (updatedTickets[i].id === ticket.id) {
@@ -35,8 +35,7 @@ class Tickets extends Component {
                 found = true;
             }
         }
-        this.setState({tickets: updatedTickets});        
-        this.setState({color: false});
+        this.setState({tickets: updatedTickets, color: false});
     }
 
     deleteTicket = (ticket) => {
@@ -49,9 +48,7 @@ class Tickets extends Component {
             }
         }
         updatedTickets.splice(i,1);
-        console.log(updatedTickets);
-        this.setState({tickets: updatedTickets});
-        this.setState({color: false});
+        this.setState({tickets: updatedTickets, color: false});
     }
 
     componentDidMount () {
@@ -67,11 +64,17 @@ class Tickets extends Component {
 
     handleChange = (panelId) => {
         if (this.state.expanded !== panelId) {
-            this.setState({expanded: panelId});
+            this.setState({expanded: panelId, color: false});
         } else {
-            this.setState({expanded: null});            
+            this.setState({expanded: null, color: false});            
         }
-        this.setState({color: false})
+    }
+
+    createTicket = (ticket) => {
+        let updatedTickets = this.state.tickets.splice(0, this.state.tickets.length);
+        updatedTickets.push(ticket);
+        console.log(updatedTickets);
+        this.setState({tickets: updatedTickets, color: false});
     }
     
     render () {
@@ -113,19 +116,49 @@ class Tickets extends Component {
             </Grid>
             )
         }
-
+        
         if (this.cookies.get('is_hacker') === "true") {
-            return (
-                <Grid container >
-                    <Grid item xs = {4} ></Grid>
-                    <Grid item xs = {4} >
-                        <Card className = {classes.card} >
-                            <TicketForm cookies={this.cookies}></TicketForm>
-                        </Card>
+            let user_id = this.cookies.get('user_id');
+            let ticket = this.state.tickets.find(function teTicket(element) {
+                            return element.user_id == user_id;
+                        })
+            console.log(this.state.tickets);
+            if (ticket) {
+                return (
+                    <Grid container >
+                        <Grid item xs = {3} ></Grid>
+                        <Grid item xs = {6} >
+                            <Card className = {classes.card} >
+                                <Typography
+                                    variant = 'h4'
+                                    className = { classes.title }
+                                >Your Ticket</Typography>
+                                <TicketCard 
+                                    cookies = {this.cookies} 
+                                    ticket = {ticket} 
+                                    color = {true}
+                                    deleteTicket = {this.deleteTicket}
+                                    expanded = {this.state.expanded}
+                                    handleChange = {this.handleChange}
+                                ></TicketCard>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={3}></Grid>
                     </Grid>
-                <Grid item xs={4}></Grid>
-            </Grid>
-            )
+                )
+            } else {
+                return (
+                    <Grid container >
+                        <Grid item xs = {3} ></Grid>
+                        <Grid item xs = {6} >
+                            <Card className = {classes.card} >
+                                <TicketForm cookies={this.cookies} createTicket={this.createTicket}></TicketForm>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={3}></Grid>
+                    </Grid>
+                )
+            }
         }
 
         return (
@@ -137,7 +170,6 @@ class Tickets extends Component {
                             <Grid item xs= {10}>
                                 <Typography
                                     variant = 'h4'
-                                    className = { classes.title }
                                 >Tickets</Typography>
                             </Grid>
                             <Grid item xs = {2} >

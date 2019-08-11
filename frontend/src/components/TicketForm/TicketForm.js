@@ -28,7 +28,7 @@ class TicketForm extends Component {
         this.state.name = this.cookies.get('name');
         createTicket(this.state.name, this.state.topic, this.state.comments, this.state.location, this.cookies.get('contact'), this.cookies.get('token'),
         (response) => {
-            
+            this.props.createTicket(response.data.data);
         }, (onError) => {
             this.setState({ open: true});
         });
