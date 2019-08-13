@@ -35,23 +35,24 @@ class TicketCard extends Component {
         });
     }
     
-    unClaim(ticket, token) {
+    unClaim = () => {
         console.log("reopening");
-        console.log(ticket);
-        unClaimTicket(ticket, token, (response) => {
+        console.log(this.ticket);
+        unClaimTicket(this.ticket, this.cookies.get('token'), 
+        (response) => {
             this.setState({claimed: ""});            
-            this.props.claimPress(ticket, "");
+            this.props.claimPress(this.ticket, "");
         }, (error) => {
             console.log(error);
         });
         
     }
     
-    deleteButton(ticket, token) {
+    deleteButton = () => {
         console.log("deleting");
-        console.log(ticket);
-        deleteTicket(ticket, token, (response) => {
-            this.props.deleteTicket(ticket);
+        console.log(this.ticket);
+        deleteTicket(this.ticket, this.cookies.get('token'), (response) => {
+            this.props.deleteTicket(this.ticket);
         }, (error) => {
             console.log(error);
         });
@@ -69,18 +70,24 @@ class TicketCard extends Component {
                 className = { classes.button }
                 fullWidth
                 onClick={this.claim}
+                color ='primary'
+                variant = 'contained'
             >Claim</Button>;
         let unClaimbutton = 
             <Button
                 className = { classes.button }
+                color='primary'
                 fullWidth
-                onClick = {() => this.unClaim(this.ticket, this.props.cookies.get('token'))}
+                variant = 'contained'
+                onClick = {this.unClaim}
             >Reopen</Button>;
         let removeButton = 
             <Button
-                className = { classes.removeButton }
+                className = { classes.button }
+                variant = 'contained'
+                color = 'secondary'
                 fullWidth
-                onClick = {() => this.deleteButton(this.ticket, this.props.cookies.get('token'))}
+                onClick = {this.deleteButton}
             >Remove</Button>;
         const is_hacker = this.cookies.get('is_hacker') === 'true';
         return (

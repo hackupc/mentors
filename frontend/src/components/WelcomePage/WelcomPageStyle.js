@@ -4,11 +4,10 @@ export { styles }
 const styles = theme => ({
     card: globalCard,
     link: {
-        color: colors.secondary
+        color: colors.primary.dark
     },
     text: {
         fontWeight: 'normal',
-        color: colors.text,
         textAlign: 'center'
     }
 });

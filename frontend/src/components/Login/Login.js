@@ -101,13 +101,15 @@ class Login extends Component {
                                 value={this.state.password}
                             ></TextField>
                             <Button 
+                                color='primary'
                                 fullWidth
                                 variant='contained'  
                                 className={classes.button} 
                                 onClick={this.logIn}
                                 disabled = {!(this.state.email && this.state.email.includes("@") && this.state.password)}
                             >Log in</Button>
-                            <Button 
+                            <Button
+                                color='primary'
                                 fullWidth
                                 variant='contained' 
                                 className={classes.button} 

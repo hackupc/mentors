@@ -4,24 +4,16 @@ export { styles }
 
 const styles = theme => ({
     button: globalButton,
-    removeButton: {
-        marginTop: 10,
-        backgroundColor: colors.cancel,
-        "&:hover": {
-            backgroundColor: colors.cancel,
-        },
-        color: colors.text
-    },
     ticket: {
-        background: colors.backgroundSecondary
+        background: colors.background.dark
     },
     claimText: {
-        color : colors.cancel
+        color : colors.secondary.main
     },
     waitingText: {
-        color: colors.secondary
+        color: colors.primary.dark
     },
     claimedByText: {
-        color: colors.darkSecondary
+        color: colors.primary.dark
     }
 });

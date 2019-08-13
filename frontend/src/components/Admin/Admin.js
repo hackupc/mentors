@@ -120,8 +120,9 @@ class Admin extends Component {
                                 {usersList}
                             </TableBody>
                         </Table>
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            color='primary'
+                            variant="contained"
                             className={classes.button} 
                             onClick={this.handleOpen}
                             fullWidth

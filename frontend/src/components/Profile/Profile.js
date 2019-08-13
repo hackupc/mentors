@@ -97,7 +97,8 @@ class profile extends Component {
                         >Contact: {this.props.cookies.get('contact')}</Typography>
                     );
         let cancelButton = (
-                        <Button 
+                        <Button
+                            color='primary'
                             variant="contained" 
                             className={classes.cancelButton} 
                             onClick={this.cancelClicked}
@@ -117,7 +118,8 @@ class profile extends Component {
                             className = { classes.text }
                         >Email: {this.props.email}</Typography>
                         { this.state.showEdit ? editUser : showContact}
-                        <Button 
+                        <Button
+                            color='primary'
                             variant="contained" 
                             className={classes.button} 
                             onClick={this.editClicked}
