@@ -8,6 +8,7 @@ export const theme = createMuiTheme({
     },
     typography: {
         fontFamily: colors.text.font,
+        useNextVariants: true,
     },
     MuiButton: {
         marginTop: 10,
