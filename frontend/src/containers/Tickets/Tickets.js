@@ -177,6 +177,7 @@ class Tickets extends Component {
                                     <FormControlLabel
                                         value="start"
                                         control={<Switch
+                                                color='primary'
                                                 onChange = {this.toggleShow}
                                             ></Switch>}
                                         label="Claimed"
