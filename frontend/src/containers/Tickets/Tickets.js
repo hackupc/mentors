@@ -11,7 +11,6 @@ import { Typography } from '@material-ui/core';
 import { styles} from './TicketsStyle';
 import Switch from '@material-ui/core/Switch';
 
-
 class Tickets extends Component {
     cookies = this.props.cookies
     
@@ -113,8 +112,8 @@ class Tickets extends Component {
                             >You must <a className = {classes.errorLink} href='/log-in'>log in</a> before</Typography>
                         </Card>
                     </Grid>
-                <Grid item xs={4}></Grid>
-            </Grid>
+                    <Grid item xs={4}></Grid>
+                </Grid>
             )
         }
         
@@ -179,7 +178,6 @@ class Tickets extends Component {
                                         value="start"
                                         control={<Switch
                                                 onChange = {this.toggleShow}
-                                                color= "primary"
                                             ></Switch>}
                                         label="Claimed"
                                         labelPlacement="start"
