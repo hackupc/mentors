@@ -98,7 +98,7 @@ class profile extends Component {
                     );
         let cancelButton = (
                         <Button
-                            color='primary'
+                            color='secondary'
                             variant="contained" 
                             className={classes.cancelButton} 
                             onClick={this.cancelClicked}

@@ -6,14 +6,14 @@
 const colors = {
     primary: {
         light: '#cfff95',
-        main: '#9ccc65',
-        dark: '#6b9b37',
+        main: '#9ccc65',        
+        dark: '#6b9b37',        //same 1
         contrastText: '#000',
     },
-    secondary: {
+    secondary: {                //Colors for remove button, etc
         light: '#ffa270',
         main: '#ff7043',
-        dark: '#c63f17',
+        dark: '#c63f17',        //same 2
         contrastText: '#000',
     },
     background: {
@@ -25,7 +25,10 @@ const colors = {
     text: {
         navBar: '#555',
         tableTitle: '#000',
-        font: "ProximaNovaRegular, 'Roboto', sans-serif"
+        font: "ProximaNovaRegular, 'Roboto', sans-serif",
+        active: '#6b9b37',      //same 1
+        yours: '#005005',
+        cancel: '#c63f17'       //same 2
     }
 
 }

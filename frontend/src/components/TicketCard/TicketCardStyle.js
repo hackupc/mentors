@@ -8,12 +8,12 @@ const styles = theme => ({
         background: colors.background.dark
     },
     claimText: {
-        color : colors.secondary.main
+        color : colors.text.cancel
     },
     waitingText: {
-        color: colors.primary.dark
+        color: colors.text.active
     },
     claimedByText: {
-        color: colors.primary.dark
+        color: colors.text.yours
     }
 });
