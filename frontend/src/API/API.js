@@ -99,6 +99,7 @@ const updateContact = (id, contact, token, onResponse, onError) => {
     });
 }
 
+
 const createTicket = (title, topic, comments, location, contact, token, onResponse, onError) => {
     axios({ method: 'POST', url: baseUrl + '/api/v1/tickets', headers: {Authorization: token}, data: 
         {
@@ -109,7 +110,7 @@ const createTicket = (title, topic, comments, location, contact, token, onRespon
                 "contact": contact,
                 "location": location,
                 "status":1, 
-                "comments": comments
+                "comments": comments,
             }	
         }
     }).then(function (response) {
@@ -120,6 +121,7 @@ const createTicket = (title, topic, comments, location, contact, token, onRespon
         onError(error)
     });
 }
+
 
 const getUsers = (onResponse, onError, token) => {
     axios({ method: 'GET', url: baseUrl + '/api/v1/users', headers: {Authorization: token}, data: {}
@@ -163,6 +165,15 @@ const claimTicket = (ticket, token, user_id, onResponse, onError) => {
     });
 }
 
+const unClaimTicket = (ticket, token, onResponse, onError) => {
+    axios({ method: 'PUT', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {ticket: {id: ticket.id, claimer_id: null}}
+    }).then(function (response) {
+        onResponse(response.data.data);
+    }).catch(function (error) {
+        onError(error)
+    });
+}
+
 const updateTicket = (ticket, token, user_id, onResponse, onError) => {
     axios({ method: 'PUT', url: baseUrl + '/api/v1/tickets/' + ticket.id, headers: {Authorization: token}, data: {ticket: ticket}
     }).then(function (response) {
@@ -181,4 +192,4 @@ const deleteTicket = (ticket, token, onResponse, onError) => {
     });
 }
 
-export { login, createTicket , loadTickets, register, getUsers, inviteUser, claimTicket, registerMentor, updateTicket, deleteTicket, updateContact };
+export { login, createTicket , loadTickets, register, getUsers, inviteUser, claimTicket, unClaimTicket, registerMentor, updateTicket, deleteTicket, updateContact };

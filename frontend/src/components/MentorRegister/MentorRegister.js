@@ -6,32 +6,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Card from '@material-ui/core/Card';
+import { Typography } from '@material-ui/core';
+
 
 
 import { registerMentor } from '../../API/API'
-
-const styles = theme => ({
-    card: {
-        minWidth: 275,
-        maxWidth: 300,
-        margin: 16,
-    },
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
-    },
-    dense: {
-      marginTop: 19,
-    },
-    menu: {
-      width: 200,
-    },
-    button: {
-        margin: theme.spacing.unit,
-        width: '200px'
-      },
-  });
+import { styles } from './MentorRegisterStyle'
+import { Grid } from '@material-ui/core';
 
 class SignUp extends Component {
     state = {
@@ -43,7 +24,8 @@ class SignUp extends Component {
         open: false,
         vertical: 'top',
         horizontal: 'center',
-        registered: false
+        registered: false,
+        confirmPassword: null
     }
 
     cookies = this.props.cookies;
@@ -78,64 +60,106 @@ class SignUp extends Component {
         if (this.state.open) {
             return <Redirect to='/log-in'/>; 
         }
-
+        if (this.state.redirect || this.cookies.get('user_id')) {
+            console.log('redirecting');
+            return <Redirect to='/tickets'/>;
+        }
         return(
-            <center>
-                <Card className={classes.card}>
-                <form noValidate autoComplete="off">
-                    <center>
-                    <TextField
-                        id="name"
-                        label="Name"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    /><br/>
-                    <TextField
-                        id="email"
-                        label="Email"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    /><br/>
-                    <TextField
-                        id="contact"
-                        label="Contact (slack)"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    /><br/>
-                    <TextField
-                        id="password"
-                        label="Password"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                        type='password'
-                    /><br/>
-                    <TextField
-                        id="code"
-                        label="Invitation code"
-                        className={classes.textField}
-                        onChange={this.handleChange}
-                        margin="normal"
-                    /><br/>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={this.signUp}>
-                        Register
-                    </Button>
-                    </center>
-                </form>
-                <Snackbar
-                    anchorOrigin={{ vertical, horizontal }}
-                    open={open}
-                    onClose={this.handleClose}
-                    ContentProps={{
-                        'aria-describedby': 'message-id',
-                    }}
-                    message={<span id="message-id">I love snacks</span>}
-                />
-            </Card>
-            </center>
+            <Grid container >
+                <Grid item xs = {4} ></Grid>
+                <Grid item xs = {4} >
+                    <Card className={classes.card}>
+                        <form noValidate autoComplete="off">
+                            <Typography
+                                variant = "h4"
+                            >Mentor's Register</Typography>
+                            <Typography
+                                variant = "subtitle1"
+                            >Welcome Mentor!! We are so thankful for your help!!</Typography>
+                            <TextField
+                                autoFocus
+                                fullWidth
+                                id = "name"
+                                label = "Name"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                required
+                            ></TextField>
+                            <TextField
+                                autoComplete = 'email'
+                                fullWidth
+                                id = "email"
+                                label = "Email"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                required
+                                value = {this.state.email}
+                                error = {this.state.email && !this.state.email.includes("@")}
+                                helperText = {this.state.email && !this.state.email.includes("@") ? 'Email is not valid' : ''}
+                                ></TextField>
+                            <TextField
+                                fullWidth
+                                id = "contact"
+                                label = "Contact (slack)"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                required
+                                ></TextField>
+                            <TextField
+                                fullWidth
+                                id = "password"
+                                label = "Password"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                type = 'password'
+                                required
+                                value = {this.state.password}
+                                ></TextField>
+                            <TextField
+                                fullWidth
+                                id = "confirmPassword"
+                                label = "Confirm Password"
+                                onChange = {this.handleChange}
+                                margin = "normal"
+                                type = 'password'
+                                required
+                                value = {this.state.confirmPassword}
+                                error = {this.state.confirmPassword !== this.state.password}
+                                helperText = {this.state.confirmPassword !== this.state.password ? 'Passwords are not the same' : ''}
+                            ></TextField>
+                            <TextField
+                                fullWidth
+                                required
+                                id="code"
+                                label="Invitation code"
+                                className={classes.textField}
+                                onChange={this.handleChange}
+                                margin="normal"
+                            ></TextField>
+                            <Button
+                                fullWidth
+                                variant = "contained" 
+                                color = "primary" 
+                                className = {classes.button} 
+                                onClick = {this.signUp}
+                                disabled = {!(this.state.confirmPassword === this.state.password && this.state.email &&
+                                            this.state.email.includes("@") && this.state.name && this.state.password &&
+                                            this.state.contact && this.state.code)}
+                            >Register</Button>
+                        </form>
+                        <Snackbar
+                            anchorOrigin={{ vertical, horizontal }}
+                            open={open}
+                            onClose={this.handleClose}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">I love snacks</span>}
+                        />
+                    </Card>
+                </Grid>
+                <Grid item xs = {4} ></Grid>
+            </Grid>
         );
     }
 }

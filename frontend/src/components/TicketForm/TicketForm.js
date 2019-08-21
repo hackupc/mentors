@@ -6,28 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { createTicket } from '../../API/API'
 
-
-const styles = theme => ({
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
-    },
-    dense: {
-      marginTop: 19,
-    },
-    menu: {
-      width: 200,
-    },
-    button: {
-        margin: theme.spacing.unit,
-        width: '200px',
-        backgroundColor: '#d13f5a',
-        "&:hover": {
-            backgroundColor: "#d13f5a"
-        }
-      },
-});
+import { styles } from './TicketFormStyle'
+import { Typography, Snackbar } from '@material-ui/core';
 
 class TicketForm extends Component {
 
@@ -36,66 +16,90 @@ class TicketForm extends Component {
         topic: null,
         comments: null,
         location: null,
-        contact: null
+        contact: null,
+        open: false,
+        vertical: 'bottom',
+        horizontal: 'center',
     }
 
     cookies = this.props.cookies
 
     handleTicketSubmit = () => {
+        this.state.name = this.cookies.get('name');
         createTicket(this.state.name, this.state.topic, this.state.comments, this.state.location, this.cookies.get('contact'), this.cookies.get('token'),
         (response) => {
-            this.props.onCreate(response.data.data);
+            this.props.createTicket(response.data.data);
         }, (onError) => {
-
+            this.setState({ open: true});
         });
+    }
+
+    handleClose = event => {
+        this.setState({ open: false});
     }
 
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         })
+
     }
 
     render() {
         const { classes } = this.props;
+        const { vertical, horizontal, open } = this.state;
         return (            
         <Aux>
-            <center>
-            <h2>Create a new ticket</h2>
             <form onSubmit={this.logIn} noValidate autoComplete='off'>
+                <Typography
+                    variant = 'h4'
+                >Hey, {this.cookies.get('name')}!</Typography>
+                <Typography
+                    variant = 'h4'
+                >How can we help you today?</Typography>
                 <TextField
-                    id='name'
-                    label='Title'
-                    className={classes.textField}
-                    margin='normal'
-                    onChange={this.handleChange}
-                /><br/>
-                <TextField
+                    fullWidth
                     id='topic'
-                    label='Topic'
-                    className={classes.textField}
+                    label='I need help with:'
+                    placeholder = 'Java, Python, React.js, etc'
                     margin='normal'
                     onChange={this.handleChange}
-                /><br/>
+                ></TextField>
                 <TextField
+                    fullWidth
                     id='comments'
-                    label='Comments'
-                    className={classes.textField}
+                    label='Describe your problem'
+                    multiline
+                    rowsMax = '4'
                     margin='normal'
                     onChange={this.handleChange}
-                /><br/>
+                ></TextField>
                 <TextField
+                    fullWidth
                     id='location'
-                    label='Location'
-                    className={classes.textField}
+                    label='You can find me at'
+                    placeholder = 'A5101, A6201, etc'
                     margin='normal'
                     onChange={this.handleChange}
-                /><br/>
-                <Button variant='contained' color='primary' className={classes.button} onClick={this.handleTicketSubmit}>
-                    Create ticket
-                </Button>
+                ></TextField>
+                <Button 
+                    fullWidth
+                    variant='contained' 
+                    color='primary' 
+                    className={classes.button} 
+                    onClick={this.handleTicketSubmit}
+                    >Create ticket</Button>
             </form>
-            </center>
+            <Snackbar
+                className = {classes.snackbar}
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={this.handleClose}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">There has been a problem</span>}
+            />
         </Aux>
         );
     }

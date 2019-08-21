@@ -3,47 +3,25 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import { login } from '../../API/API'
 
-const styles = theme => ({
-    card: {
-        minWidth: 275,
-        maxWidth: 300,
-        margin: 16,
-    },
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
-    },
-    dense: {
-      marginTop: 19,
-    },
-    menu: {
-      width: 200,
-    },
-    button: {
-        margin: theme.spacing.unit,
-        width: '200px',
-        backgroundColor: '#d13f5a',
-        "&:hover": {
-            backgroundColor: "#d13f5a"
-        }
-      },
-});
+import { styles } from './LoginStyle'
 
 class Login extends Component {
     state = {
         email: null,
         password: null,
         redirect: false,
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'center',
+        open: false
     }
 
     cookies = this.props.cookies
@@ -51,6 +29,10 @@ class Login extends Component {
     componentDidMount() {
 
     }
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     handleChange = event => {
         this.setState({
@@ -73,43 +55,81 @@ class Login extends Component {
             console.log(this.cookies.get('token'));
             this.setState({redirect: true})
         }, (error) => {
-
+            console.log(error);
+            this.setState({ open: true , password: ''});
         });
     }
-
+    
     render() {
         const { classes } = this.props;
-        if (this.state.redirect) {
+        const { vertical, horizontal, open } = this.state;
+        if (this.state.redirect || this.cookies.get('user_id')) {
             console.log('redirecting');
             return <Redirect to='/tickets'/>;
         }
         return(
-            <center>
-                <Card className={classes.card}>
-                    <form noValidate autoComplete='off'>
-                        <center>
-                        <TextField
-                            id='email'
-                            label='Email'
-                            className={classes.textField}
-                            margin='normal'
-                            onChange={this.handleChange}
-                        /><br/>
-                        <TextField
-                            id='password'
-                            label='Password'
-                            className={classes.textField}
-                            margin='normal'
-                            onChange={this.handleChange}
-                            type='password'
-                        /><br/>
-                        <Button variant='contained' color='primary' className={classes.button} onClick={this.logIn}>
-                            Login
-                        </Button>
-                        </center>
-                    </form>
-                </Card>
-            </center>
+            <Grid container >
+                <Grid item xs = {4} ></Grid>
+                <Grid item xs = {4} >
+                    <Card className = {classes.card} >
+                        <form noValidate>
+                            <Typography 
+                                variant="h4"
+                            >Log in</Typography>
+                            <TextField
+                                id='email'
+                                label='Email'
+                                margin='normal'
+                                onChange={this.handleChange}
+                                required
+                                fullWidth
+                                name="email"
+                                autoFocus
+                                value = {this.state.email}
+                                error = {this.state.email && !this.state.email.includes("@")}
+                                helperText = {this.state.email && !this.state.email.includes("@") ? 'Email is not valid' : ''}
+                            ></TextField>
+                            <TextField
+                                id='password'
+                                label='Password'
+                                margin='normal'
+                                onChange={this.handleChange}
+                                type='password'
+                                required
+                                fullWidth
+                                name='password'
+                                value={this.state.password}
+                            ></TextField>
+                            <Button 
+                                color='primary'
+                                fullWidth
+                                variant='contained'  
+                                className={classes.button} 
+                                onClick={this.logIn}
+                                disabled = {!(this.state.email && this.state.email.includes("@") && this.state.password)}
+                            >Log in</Button>
+                            <Button
+                                color='primary'
+                                fullWidth
+                                variant='contained' 
+                                className={classes.button} 
+                                href = '/sign-up'
+                            >Sign up</Button>
+                        </form>
+                        <Snackbar
+                            className={classes.snackbar}
+                            anchorOrigin={{ vertical, horizontal }}
+                            open={open}
+                            onClose={this.handleClose}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">Your email or password are wrong. Please try again.</span>}
+                        ></Snackbar>
+                    </Card>
+                </Grid>
+                <Grid item xs={4}></Grid>
+            </Grid>
         );
     }
 }

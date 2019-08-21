@@ -3,61 +3,122 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 import { NavLink } from 'react-router-dom';
 
 import Aux from '../../hoc/Aux'
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  bar: {
-    colorPrimary: '#d13f5a',
-    colorDefault: '#d13f5a'
-  }
-};
+import { styles } from './NavBarStyle'
+
+
+
 
 const ButtonAppBar = (props) => {
   const { classes } = props;
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  function handleMenu(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function logOut() {
+    setAnchorEl(null);
+    props.cookies.remove("token");
+    props.cookies.remove("email");
+    props.cookies.remove("name");
+    props.cookies.remove("user_id");
+    props.cookies.remove("contact");
+    window.location = "/";
+}
+
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
+  function profile() {
+    setAnchorEl(null);
+    window.location = "/profile";
+  }
+
   let rightLinks;
   let admin = null;
-  console.log(props.cookies.get('is_admin'));
   let isAdmin = props.cookies.get('is_admin');
   if (isAdmin === "true") {
-    admin = <NavLink to="/admin"style={{'color': 'white', 'margin': '10px'}}>Admin</NavLink>
+    admin = (
+      <NavLink 
+        to="/admin" 
+        className={classes.navBarLink} 
+        activeClassName={classes.navBarLinkActive} 
+      >Admin</NavLink>)
   }
   if (props.email) {
     rightLinks = (
-    <Aux>
-      { admin }
-      <NavLink to="/tickets" style={{'color': 'white', 'margin': '10px'}}>Tickets</NavLink>
-      <NavLink to="/profile" style={{'color': 'white', 'margin': '10px'}}>{props.email}</NavLink>
-    </Aux>);
+      <Aux>
+        { admin }
+        <NavLink 
+          to="/tickets" 
+          className={classes.navBarLink} 
+          activeClassName={classes.navBarLinkActive}
+        >Tickets</NavLink>
+        <Avatar 
+          onClick={handleMenu}
+          className={classes.avatar}
+        >{props.name ? props.name.slice(0,2) : ''}</Avatar>
+      </Aux>);
   } else {
     rightLinks = (
       <Aux>
-        <NavLink to="/tickets" style={{'color': 'white', 'margin': '10px'}}>Tickets</NavLink>
-        <NavLink to="/log-in" style={{'color': 'white', 'margin': '10px'}}>Log In</NavLink>
-        <NavLink to="sign-in" style={{'color': 'white', 'margin': '10px'}}>Sign Up</NavLink>
+        <NavLink 
+          to="/log-in" 
+          className={classes.navBarLink} 
+          activeClassName={classes.navBarLinkActive} 
+        >Log In</NavLink>
+        <NavLink 
+          to="/sign-up" 
+          className={classes.navBarLink} 
+          activeClassName={classes.navBarLinkActive} 
+        >Sign Up</NavLink>
       </Aux>
       );
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{backgroundColor: '#d13f5a'}} color="default">
+      <AppBar position="static" className={classes.navBarStyle} color="default">
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.grow}>
-            <NavLink to="" style={{'color': 'white'}}>HackUPC Mentors</NavLink>
+            <NavLink to="" className={classes.navBarTitle} >HackUPC Mentors</NavLink>
           </Typography>
           {rightLinks}
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            className = { classes.menu }
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            keepMounted
+          >
+            <MenuItem 
+              onClick={profile}
+              className = { classes.menuItem}
+              >Profile</MenuItem>
+            <MenuItem 
+              onClick={logOut}
+              className = { classes.menuItem}              
+            >Log out</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </div>
