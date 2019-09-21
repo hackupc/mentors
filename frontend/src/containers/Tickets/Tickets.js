@@ -126,8 +126,8 @@ class Tickets extends Component {
             if (ticket) {
                 return (
                     <Grid container >
-                        <Grid item xs = {3} ></Grid>
-                        <Grid item xs = {6} >
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 3} ></Grid>
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 8 : 6} >
                             <Card className = {classes.card} >
                                 <Typography
                                     variant = 'h4'
@@ -143,19 +143,19 @@ class Tickets extends Component {
                                 ></TicketCard>
                             </Card>
                         </Grid>
-                        <Grid item xs={3}></Grid>
+                        <Grid item xs={document.body.offsetWidth < 1000 ? 2 : 3}></Grid>
                     </Grid>
                 )
             } else {
                 return (
                     <Grid container >
-                        <Grid item xs = {3} ></Grid>
-                        <Grid item xs = {6} >
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 3} ></Grid>
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 8 : 6} >
                             <Card className = {classes.card} >
                                 <TicketForm cookies={this.cookies} createTicket={this.createTicket}></TicketForm>
                             </Card>
                         </Grid>
-                        <Grid item xs={3}></Grid>
+                        <Grid item xs={document.body.offsetWidth < 1000 ? 2 : 3}></Grid>
                     </Grid>
                 )
             }
@@ -163,16 +163,16 @@ class Tickets extends Component {
 
         return (
             <Grid container >
-                <Grid item xs = {3} ></Grid>
-                <Grid item xs = {6} >
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 3} ></Grid>
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 8 : 6} >
                     <Card className = {classes.card} >
                         <Grid container >
-                            <Grid item xs= {10}>
+                            <Grid item xs= {6}>
                                 <Typography
                                     variant = 'h4'
                                 >Tickets</Typography>
                             </Grid>
-                            <Grid item xs = {2} >
+                            <Grid item xs = {6} >
                                 <FormGroup>
                                     <FormControlLabel
                                         value="start"
@@ -189,7 +189,7 @@ class Tickets extends Component {
                             {tickets}
                         </Card>
                     </Grid>
-                <Grid item xs={3}></Grid>
+                <Grid item xs={document.body.offsetWidth < 1000 ? 2 : 3}></Grid>
             </Grid>
         )
     }
