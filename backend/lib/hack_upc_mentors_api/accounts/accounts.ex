@@ -67,30 +67,28 @@ defmodule HackUpcMentorsApi.Accounts do
     user = Repo.get!(User, user_id)
     case user.is_admin do
       true ->
-        query = from u in HackUpcMentorsApi.Accounts.User, where: u.is_mentor == true
-        Repo.all(query)
+        query = from u in HackUpcMentorsApi.Accounts.User, where: u.id == ^user_id
+        Repo.one!(query)
       false ->
         {:error, :error}
     end
   end
 
-  def delete_mentor(id, user_id) do
-    user = Repo.get!(User, user_id)
+  def delete_mentor(%User{} = user) do
     case user.is_admin do
       true ->
-        query = from u in HackUpcMentorsApi.Accounts.User, where: u.is_mentor == true
-        Repo.all(query)
+        Repo.delete(user)
       false ->
         {:error, :error}
     end
   end
 
-  def update_mentor(id, user_id) do
-    user = Repo.get!(User, user_id)
+  def update_mentor(%User{} = user, attrs) do
     case user.is_admin do
       true ->
-        query = from u in HackUpcMentorsApi.Accounts.User, where: u.is_mentor == true
-        Repo.delete_all(query)
+        user
+        |> Changeset(attrs)
+        |> Repo.update()
       false ->
         {:error, :error}
     end
