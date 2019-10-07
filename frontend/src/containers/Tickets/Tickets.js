@@ -102,8 +102,8 @@ class Tickets extends Component {
         if (!this.cookies.get('token')) {
             return (
                 <Grid container >
-                    <Grid item xs = {4} ></Grid>
-                    <Grid item xs = {4} >
+                    <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 4} ></Grid>
+                    <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 4} >
                         <Card className = {classes.card} >
                             <Typography
                                 component="h1" 
@@ -112,7 +112,7 @@ class Tickets extends Component {
                             >You must <a className = {classes.errorLink} href='/log-in'>log in</a> before</Typography>
                         </Card>
                     </Grid>
-                    <Grid item xs={4}></Grid>
+                    <Grid item xs={document.body.offsetWidth < 1000 ? 2 : 4}></Grid>
                 </Grid>
             )
         }
@@ -126,8 +126,8 @@ class Tickets extends Component {
             if (ticket) {
                 return (
                     <Grid container >
-                        <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 3} ></Grid>
-                        <Grid item xs = {document.body.offsetWidth < 1000 ? 8 : 6} >
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 3} ></Grid>
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 6} >
                             <Card className = {classes.card} >
                                 <Typography
                                     variant = 'h4'
@@ -143,19 +143,19 @@ class Tickets extends Component {
                                 ></TicketCard>
                             </Card>
                         </Grid>
-                        <Grid item xs={document.body.offsetWidth < 1000 ? 2 : 3}></Grid>
+                        <Grid item xs={document.body.offsetWidth < 1000 ? 0 : 3}></Grid>
                     </Grid>
                 )
             } else {
                 return (
                     <Grid container >
-                        <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 3} ></Grid>
-                        <Grid item xs = {document.body.offsetWidth < 1000 ? 8 : 6} >
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 3} ></Grid>
+                        <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 6} >
                             <Card className = {classes.card} >
                                 <TicketForm cookies={this.cookies} createTicket={this.createTicket}></TicketForm>
                             </Card>
                         </Grid>
-                        <Grid item xs={document.body.offsetWidth < 1000 ? 2 : 3}></Grid>
+                        <Grid item xs={document.body.offsetWidth < 1000 ? 0 : 3}></Grid>
                     </Grid>
                 )
             }
@@ -163,8 +163,8 @@ class Tickets extends Component {
 
         return (
             <Grid container >
-                <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 3} ></Grid>
-                <Grid item xs = {document.body.offsetWidth < 1000 ? 8 : 6} >
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 3} ></Grid>
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 6} >
                     <Card className = {classes.card} >
                         <Grid container >
                             <Grid item xs= {6}>
@@ -189,7 +189,7 @@ class Tickets extends Component {
                             {tickets}
                         </Card>
                     </Grid>
-                <Grid item xs={document.body.offsetWidth < 1000 ? 2 : 3}></Grid>
+                <Grid item xs={document.body.offsetWidth < 1000 ? 0 : 3}></Grid>
             </Grid>
         )
     }
