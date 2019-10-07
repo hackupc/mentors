@@ -87,7 +87,7 @@ defmodule HackUpcMentorsApi.Accounts do
     case user.is_admin do
       true ->
         user
-        |> Changeset(attrs)
+        |> User.changeset(attrs)
         |> Repo.update()
       false ->
         {:error, :error}
