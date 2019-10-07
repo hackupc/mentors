@@ -107,8 +107,8 @@ class profile extends Component {
         );
         return (
             <Grid container >
-                <Grid item xs = {4} ></Grid>
-                <Grid item xs = {4} >
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 4} ></Grid>
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 4} >
                     <Card className = {classes.card} >
                         <Typography
                             variant="h4"
@@ -138,7 +138,7 @@ class profile extends Component {
                         ></Snackbar>
                     </Card>
                 </Grid>
-                <Grid item xs={4}></Grid>
+                <Grid item xs={document.body.offsetWidth < 1000 ? 0 : 4}></Grid>
             </Grid>
         );
     }

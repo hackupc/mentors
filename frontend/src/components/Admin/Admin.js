@@ -87,21 +87,21 @@ class Admin extends Component {
 
         return (
             <Grid container >
-                <Grid item xs = {3} ></Grid>
-                <Grid item xs = {6} >
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 3} ></Grid>
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 6} >
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                         open={this.state.showAddUsers}
                         onClose={this.handleClose}>
                         <Grid container >
-                            <Grid item xs = {4} ></Grid>
-                            <Grid item xs = {4} >
+                            <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 4} ></Grid>
+                            <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 4} >
                                 <div className={classes.paper}>
                                 <InviteUserForm cookies={this.cookies}></InviteUserForm>
                                 </div>
                             </Grid>
-                        <Grid item xs={4}></Grid>
+                        <Grid item xs={document.body.offsetWidth < 1000 ? 0 : 4}></Grid>
                         </Grid>
                     </Modal>
                     <Card className = {classes.card}>
@@ -129,7 +129,7 @@ class Admin extends Component {
                         >Invite mentor</Button>
                     </Card>
                 </Grid>
-                <Grid item xs={3}></Grid>
+                <Grid item xs={document.body.offsetWidth < 1000 ? 0 : 3}></Grid>
             </Grid>
         )
     }
