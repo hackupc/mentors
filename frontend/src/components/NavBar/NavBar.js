@@ -19,7 +19,7 @@ import { styles } from './NavBarStyle'
 const ButtonAppBar = (props) => {
   const { classes } = props;
 
-  const [anchorEl, setAnchorEl] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   function handleMenu(event) {
