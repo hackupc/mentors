@@ -68,8 +68,8 @@ class SignUp extends Component {
         }
         return(
             <Grid container >
-                <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 4} ></Grid>
-                <Grid item xs = {document.body.offsetWidth < 1000 ? 8 : 4} >
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 4} ></Grid>
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 4} >
                     <Card className={classes.card}>
                         <form noValidate autoComplete="off">
                             <Typography
@@ -149,7 +149,7 @@ class SignUp extends Component {
                         />
                     </Card>
             </Grid>
-            <Grid item xs = {document.body.offsetWidth < 1000 ? 2 : 4} ></Grid>
+            <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 4} ></Grid>
         </Grid>
         );
     }

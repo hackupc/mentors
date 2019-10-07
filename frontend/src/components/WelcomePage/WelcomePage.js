@@ -14,8 +14,8 @@ class WelcomePage extends Component {
         const { classes } = this.props;
         return (
             <Grid container >
-                <Grid item xs = {3} ></Grid>
-                <Grid item xs = {6} >
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 0 : 3} ></Grid>
+                <Grid item xs = {document.body.offsetWidth < 1000 ? 12 : 6} >
                     <Card className={classes.card}>
                         <Typography 
                             variant="h4" 
@@ -27,7 +27,7 @@ class WelcomePage extends Component {
                         >Need some help? You can submit a ticket <a href='/tickets' className={classes.link}>here</a>.</Typography>
                     </Card> 
                 </Grid>
-                <Grid item xs={3}></Grid>
+                <Grid item xs={document.body.offsetWidth < 1000 ? 0 : 3}></Grid>
             </Grid>
         );
     }
