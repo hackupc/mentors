@@ -81,7 +81,8 @@ class Tickets extends Component {
         const { classes } = this.props;
 
         let tickets = this.state.tickets
-        .filter((ticket) => !ticket.claimer_id || !this.state.showAll)
+        
+        .filter((ticket) => (!ticket.claimer_id || (!this.state.showAll && (ticket.claimer_id === this.cookies.get('user_id') || this.cookies.get('is_admin') === 'true'))))
         .map(ticket =>{
             this.state.color = !this.state.color;
                 return (
