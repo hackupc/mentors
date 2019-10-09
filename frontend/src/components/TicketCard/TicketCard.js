@@ -140,7 +140,7 @@ class TicketCard extends Component {
                                 claimButton)
                             :
                             null}
-                        {this.cookies.get('is_admin') || this.cookies.get('user_id') == this.ticket.user_id ? 
+                        {this.cookies.get('is_admin') === 'true' || this.cookies.get('user_id') == this.ticket.user_id ? 
                             removeButton 
                             : 
                             null}
