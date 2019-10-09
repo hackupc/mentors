@@ -33,7 +33,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 Run the app in interactive mode.
 
 ```bash
-ies -S mix
+iex -S mix
 ```
 
 Call the following function:
