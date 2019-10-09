@@ -82,7 +82,7 @@ class Tickets extends Component {
 
         let tickets = this.state.tickets
         
-        .filter((ticket) => (!ticket.claimer_id || (!this.state.showAll && (ticket.claimer_id === this.cookies.get('user_id') || this.cookies.get('is_admin') === 'true'))))
+        .filter((ticket) => (!ticket.claimer_id || ((ticket.claimer_id === this.cookies.get('user_id') || this.cookies.get('is_admin') === 'true')) && !this.state.showAll ))
         .map(ticket =>{
             this.state.color = !this.state.color;
                 return (
