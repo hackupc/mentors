@@ -12,8 +12,8 @@ defmodule HackUpcMentorsApiWeb.Router do
   pipeline :api_auth do
     plug :fetch_session
     plug :accepts, ["json", "json-api"]
-    plug Guardian.Plug.Pipeline, module: OctoPOS.Guardian,
-    error_handler: OctoPOS.AuthErrorHandler
+    plug Guardian.Plug.Pipeline, module: HackUpcMentorsApi.Guardian,
+    error_handler: HackUpcMentorsApi.AuthErrorHandler
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.VerifyHeader, claims: %{typ: "access"}
   end
@@ -32,9 +32,7 @@ defmodule HackUpcMentorsApiWeb.Router do
   scope "/api", HackUpcMentorsApiWeb do
     pipe_through :api
 
-    post "/sign_up", RegistrationController, :sign_up
     post "/sign_in", SessionController, :sign_in
-    post "/mentors/sign_up", RegistrationController, :sing_up_with_code
     resources "/tickets", TicketController, except: [:new, :edit, :create, :update]
   end
 

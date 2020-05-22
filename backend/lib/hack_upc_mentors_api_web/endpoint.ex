@@ -1,7 +1,8 @@
 defmodule HackUpcMentorsApiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :hack_upc_mentors_api
 
-  socket "/socket", HackUpcMentorsApiWeb.UserSocket
+  socket "/socket", HackUpcMentorsApiWeb.UserSocket,
+         websocket: true
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -24,7 +25,7 @@ defmodule HackUpcMentorsApiWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Jason
 
   plug Plug.MethodOverride
   plug Plug.Head

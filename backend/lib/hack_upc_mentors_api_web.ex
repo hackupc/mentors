@@ -23,6 +23,8 @@ defmodule HackUpcMentorsApiWeb do
       import Plug.Conn
       import HackUpcMentorsApiWeb.Router.Helpers
       import HackUpcMentorsApiWeb.Gettext
+
+      alias AppWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -40,6 +42,8 @@ defmodule HackUpcMentorsApiWeb do
       import HackUpcMentorsApiWeb.Router.Helpers
       import HackUpcMentorsApiWeb.ErrorHelpers
       import HackUpcMentorsApiWeb.Gettext
+
+      alias AppWeb.Router.Helpers, as: Routes
     end
   end
 
