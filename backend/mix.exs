@@ -45,7 +45,7 @@ defmodule HackUpcMentorsApi.Mixfile do
             {:plug_cowboy, "~> 2.1"},
             {:plug, "~> 1.7"},
             {:guardian, "~> 1.2.1"},
-            {:comeonin, "~> 3.0"},
+            {:pbkdf2_elixir, "~> 1.2.1"},
             {:bamboo, "~> 1.5.0"},
             {:cors_plug, "~> 1.5"}
         ]
