@@ -18,18 +18,7 @@ defmodule HackUpcMentorsApi.Accounts.User do
         timestamps()
     end
 
-    @doc false
-    defp changeset(user, attrs) do
-        user
-        |> cast(attrs, [:name, :email, :password, :is_admin, :is_mentor, :is_hacker])
-        |> validate_required([:name, :email, :password, :is_admin, :is_mentor, :is_hacker])
-    end
-
-    def user_contact_changeset(user, attrs) do
-        user
-        |> cast(attrs, [:contact])
-    end
-
+    @spec find_and_confirm_password(String.t(), String.t()) :: {:ok, HackUpcMentorsApi.Accounts.User} | {:error, :not_found} | {:error, :unauthorized}
     def find_and_confirm_password(email, password) do
         case HackUpcMentorsApi.Repo.get_by(HackUpcMentorsApi.Accounts.User, email: email) do
             nil ->

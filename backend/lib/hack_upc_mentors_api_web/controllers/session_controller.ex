@@ -30,7 +30,6 @@ defmodule HackUpcMentorsApiWeb.SessionController do
         %{"email" => email, "password" => password} = downcasedParams
         case User.find_and_confirm_password(email, password) do
             {:ok, user} ->
-                IO.inspect(user)
                 {:ok, jwt, _full_claims} = HackUpcMentorsApi.Guardian.encode_and_sign(user, %{})
                 conn
                 |> render("sign_in.json", user: user, jwt: jwt)
